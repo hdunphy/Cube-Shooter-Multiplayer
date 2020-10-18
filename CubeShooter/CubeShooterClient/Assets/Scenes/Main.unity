@@ -1100,10 +1100,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stage
       objectReference: {fileID: 0}
-    - target: {fileID: 2445356429757294396, guid: 121847a77f878be4189733d0a3dda1d7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2445356429757294397, guid: 121847a77f878be4189733d0a3dda1d7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1148,46 +1144,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2445356430509898540, guid: 121847a77f878be4189733d0a3dda1d7, type: 3}
-      propertyPath: m_TagString
-      value: Wall
-      objectReference: {fileID: 0}
-    - target: {fileID: 2445356430509898543, guid: 121847a77f878be4189733d0a3dda1d7, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 315349c1c6b7ac44d8e225d285c6772a, type: 2}
-    - target: {fileID: 2445356431278532905, guid: 121847a77f878be4189733d0a3dda1d7, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 315349c1c6b7ac44d8e225d285c6772a, type: 2}
-    - target: {fileID: 2445356431278532918, guid: 121847a77f878be4189733d0a3dda1d7, type: 3}
-      propertyPath: m_TagString
-      value: Wall
-      objectReference: {fileID: 0}
-    - target: {fileID: 2445356431412736395, guid: 121847a77f878be4189733d0a3dda1d7, type: 3}
-      propertyPath: m_TagString
-      value: Wall
-      objectReference: {fileID: 0}
-    - target: {fileID: 2445356431412736398, guid: 121847a77f878be4189733d0a3dda1d7, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 315349c1c6b7ac44d8e225d285c6772a, type: 2}
-    - target: {fileID: 2445356431606474998, guid: 121847a77f878be4189733d0a3dda1d7, type: 3}
-      propertyPath: m_TagString
-      value: Ground
-      objectReference: {fileID: 0}
-    - target: {fileID: 2445356431606474998, guid: 121847a77f878be4189733d0a3dda1d7, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 2445356431860709988, guid: 121847a77f878be4189733d0a3dda1d7, type: 3}
-      propertyPath: m_TagString
-      value: Wall
-      objectReference: {fileID: 0}
-    - target: {fileID: 2445356431860709991, guid: 121847a77f878be4189733d0a3dda1d7, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 315349c1c6b7ac44d8e225d285c6772a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 121847a77f878be4189733d0a3dda1d7, type: 3}
 --- !u!1 &1962617058 stripped
