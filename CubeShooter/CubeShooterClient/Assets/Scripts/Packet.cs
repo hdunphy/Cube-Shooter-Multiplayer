@@ -11,7 +11,8 @@ public enum ServerPackets
     spawnPlayer,
     playerPosition,
     headRotation,
-    playerDisconnect
+    playerDisconnect,
+    bulletPosition
 }
 
 /// <summary>Sent from client to server.</summary>

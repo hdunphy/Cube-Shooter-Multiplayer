@@ -50,6 +50,9 @@ class Client
 
         ThreadManager.ExecuteOnMainThread(() =>
         {
+            BulletObjectPool.Instance.RemoveBulletsFromPlayer(player);
+            //Remove bullets connected to player
+            //player isn't always being removed
             UnityEngine.Object.Destroy(player.gameObject);
             player = null;
         });

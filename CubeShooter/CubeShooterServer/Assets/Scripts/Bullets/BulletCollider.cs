@@ -12,8 +12,8 @@ public class BulletCollider : MonoBehaviour
     private Player owner;
     private BulletObjectPool bulletObejctPool;
     private int currentBounces = 0;
-    private bool checkVelocity = false;
-    //private VisualEffect effect;
+    private bool isActive = false;
+    private int Id;
 
     private void Start()
     {
@@ -23,9 +23,12 @@ public class BulletCollider : MonoBehaviour
 
     private void Update()
     {
-        if (checkVelocity && rb.velocity == Vector3.zero)
-            bulletObejctPool.DestroyToPool(gameObject);
-
+        if (isActive)
+        {
+            if (rb.velocity == Vector3.zero)
+                bulletObejctPool.DestroyToPool(gameObject);
+            ServerSend.BulletPosition(Id, transform);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -74,11 +77,13 @@ public class BulletCollider : MonoBehaviour
         //effect.Stop();
         //effect.transform.parent = null;
 
-        checkVelocity = false;
+        isActive = false;
     }
 
-    public void OnBulletSpawn(Vector3 velcoity, float maxVelocity, Player player, int numberOfBounces)
+    public void OnBulletSpawn(Vector3 _position, Quaternion _rotation, Vector3 velcoity, float maxVelocity, Player player, int numberOfBounces)
     {
+        transform.position = _position;
+        transform.rotation = _rotation;
         NumberOfBounces = numberOfBounces;
         owner = player;
         owner.AddBullet();
@@ -86,9 +91,12 @@ public class BulletCollider : MonoBehaviour
         rb.velocity = velcoity;
         bulletVelocity = maxVelocity;
 
-        //effect = Instantiate(smoke, transform);
-        //effect.Play();
+        isActive = true;
+    }
 
-        checkVelocity = true;
+    public void CreateInstance(int _id)
+    {
+        gameObject.SetActive(false);
+        Id = _id;
     }
 }

@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     private float BulletDistanceOffset => tankMovementData.BulletDistanceOffset;
     private float BulletVelocity => tankMovementData.BulletVelocity;
     private int NumberOfBulletBounces => tankMovementData.NumberOfBulletBounces;
-    private int NumberOfBullets => tankMovementData.NumberOfBullets;
+    public int NumberOfBullets { get { return tankMovementData.NumberOfBullets; } }
 
     /*Rotate Head*/
     private float turnSmoothVelocity;

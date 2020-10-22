@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -100,7 +101,6 @@ class ServerSend
             _packet.Write(_player.id);
             _packet.Write(_player.headTransform.rotation);
 
-            //SendUDPDataToAll(_player.id, _packet);
             SendUDPDataToAll(_packet);
         }
 
@@ -113,6 +113,18 @@ class ServerSend
             _packet.Write(_playerId);
 
             SendTCPDataToAll(_packet);
+        }
+    }
+
+    public static void BulletPosition(int _id, Transform _transform)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.bulletPosition))
+        {
+            _packet.Write(_id);
+            _packet.Write(_transform.position);
+            _packet.Write(_transform.rotation);
+
+            SendUDPDataToAll(_packet);
         }
     }
     #endregion

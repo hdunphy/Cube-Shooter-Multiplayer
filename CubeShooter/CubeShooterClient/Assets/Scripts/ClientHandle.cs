@@ -51,4 +51,15 @@ public class ClientHandle : MonoBehaviour
         Destroy(GameManager.players[_id].gameObject);
         GameManager.players.Remove(_id);
     }
+
+    public static void BulletPosition(Packet _packet)
+    {
+        int _id = _packet.ReadInt();
+        Vector3 _position = _packet.ReadVector3();
+        Quaternion _rotation = _packet.ReadQuaternion();
+
+        GameManager.Instance.MoveBullet(_id, _position, _rotation);
+    }
+
+    //Need a function to remove bullets
 }

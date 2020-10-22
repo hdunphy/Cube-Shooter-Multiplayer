@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,9 +8,11 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public static Dictionary<int, PlayerManager> players = new Dictionary<int, PlayerManager>();
+    public static Dictionary<int, BulletManager> bullets = new Dictionary<int, BulletManager>();
 
     public GameObject localPlayerPrefab;
     public GameObject playerPrefab;
+    public BulletManager bulletPrefab;
 
     private void Awake()
     {
@@ -39,6 +42,17 @@ public class GameManager : MonoBehaviour
         _player.GetComponent<PlayerManager>().id = _id;
         _player.GetComponent<PlayerManager>().username = _username;
         players.Add(_id, _player.GetComponent<PlayerManager>());
+    }
 
+    public void MoveBullet(int _id, Vector3 _position, Quaternion _rotation)
+    {
+        if (!bullets.ContainsKey(_id))
+        {
+            bullets.Add(_id, Instantiate(bulletPrefab, _position, _rotation));
+        }
+        else
+        {
+            bullets[_id].MoveBullet(_position, _rotation);
+        }
     }
 }

@@ -232,7 +232,7 @@ public class Client : MonoBehaviour
             try
             {
                 _packet.InsertInt(Instance.myId);
-                if(socket != null)
+                if (socket != null)
                 {
                     socket.BeginSend(_packet.ToArray(), _packet.Length(), null, null);
                 }
@@ -250,7 +250,7 @@ public class Client : MonoBehaviour
                 byte[] _data = socket.EndReceive(_result, ref endPoint);
                 socket.BeginReceive(ReceiveCallback, null);
 
-                if(_data.Length < 4)
+                if (_data.Length < 4)
                 {
                     Instance.Disconnect();
                     return;
@@ -288,10 +288,11 @@ public class Client : MonoBehaviour
         packetHandlers = new Dictionary<int, PacketHandler>()
         {
             { (int)ServerPackets.welcome, ClientHandle.Welcome },
-            {(int)ServerPackets.spawnPlayer, ClientHandle.SpawnPlayer },
-            {(int)ServerPackets.playerPosition, ClientHandle.PlayerPosition },
-            {(int)ServerPackets.headRotation, ClientHandle.HeadRotation },
-            {(int)ServerPackets.playerDisconnect, ClientHandle.PlayerDisconnected }
+            { (int)ServerPackets.spawnPlayer, ClientHandle.SpawnPlayer },
+            { (int)ServerPackets.playerPosition, ClientHandle.PlayerPosition },
+            { (int)ServerPackets.headRotation, ClientHandle.HeadRotation },
+            { (int)ServerPackets.playerDisconnect, ClientHandle.PlayerDisconnected },
+            { (int)ServerPackets.bulletPosition, ClientHandle.BulletPosition }
         };
         Debug.Log("Initialized packets.");
     }

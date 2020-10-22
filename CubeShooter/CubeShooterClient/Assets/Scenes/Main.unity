@@ -1075,6 +1075,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   localPlayerPrefab: {fileID: 3632561767443984274, guid: 1feb879bd826676439835d8cbb5812b7, type: 3}
   playerPrefab: {fileID: 3632561767443984274, guid: 7386225d428151747bea8b612af4aeae, type: 3}
+  bulletPrefab: {fileID: 2230433819601924938, guid: ade208f8dd738bb49a22c1ff31f2df2b, type: 3}
 --- !u!4 &1328791597
 Transform:
   m_ObjectHideFlags: 0
