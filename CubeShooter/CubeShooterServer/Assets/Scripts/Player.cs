@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
 
         yield return new WaitForSeconds(seconds);
 
-        transform.position = new Vector3(0, 5, 0);
+        transform.position = RespawnLocation.Instance.GetRespawnLocation();
         tankObject.SetActive(true);
         isDead = false;
     }

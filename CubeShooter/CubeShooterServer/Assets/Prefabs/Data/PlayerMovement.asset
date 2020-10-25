@@ -19,3 +19,4 @@ MonoBehaviour:
   bulletVelocity: 7
   numberOfBulletBounces: 1
   numberOfBullets: 5
+  respawnTime: 3
