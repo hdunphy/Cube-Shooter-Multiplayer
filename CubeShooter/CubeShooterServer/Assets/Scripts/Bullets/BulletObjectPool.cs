@@ -9,6 +9,7 @@ public class BulletObjectPool : MonoBehaviour
     private BulletCollider prefab;
     private Queue<GameObject> bulletQueue;
     private int lastId = 1;
+    private int bulletsToRemove;
     //
 
     public static BulletObjectPool Instance;
@@ -40,10 +41,23 @@ public class BulletObjectPool : MonoBehaviour
 
     public void RemoveBulletsFromPlayer(Player player)
     {
-        for(int i = 0; i < player.NumberOfBullets; i++)
+        bool earlyBreak = false;
+        int i;
+
+        for(i = 0; i < player.NumberOfBullets; i++)
         {
+            if (bulletQueue.Count == 0)
+            {
+                earlyBreak = true;
+                break;
+            }
             GameObject _bullet = bulletQueue.Dequeue();
             Destroy(_bullet);
+        }
+
+        if (earlyBreak)
+        {
+            bulletsToRemove = player.NumberOfBullets - i;
         }
     }
 
@@ -60,6 +74,9 @@ public class BulletObjectPool : MonoBehaviour
     {
         bullet.GetComponent<BulletCollider>().OnBulletDespawn();
         bullet.SetActive(false);
-        bulletQueue.Enqueue(bullet);
+        if (bulletsToRemove-- > 0)
+            Destroy(bullet);
+        else
+            bulletQueue.Enqueue(bullet);
     }
 }

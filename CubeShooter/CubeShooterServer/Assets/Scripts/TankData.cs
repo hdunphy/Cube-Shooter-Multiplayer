@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "TankData", menuName = "ScriptableObjects/Tanks/TankData")]
 public class TankData : ScriptableObject
@@ -12,6 +10,7 @@ public class TankData : ScriptableObject
     [SerializeField] private float bulletVelocity;
     [SerializeField] private int numberOfBulletBounces;
     [SerializeField] private int numberOfBullets;
+    [SerializeField] private float respawnTime;
 
     public float MovementForce { get { return movementForce; } }
     public float MaximumVelocity { get { return maximumVelcoity; } }
@@ -20,4 +19,6 @@ public class TankData : ScriptableObject
     public float BulletVelocity { get { return bulletVelocity; } }
     public int NumberOfBulletBounces { get { return numberOfBulletBounces; } }
     public int NumberOfBullets { get { return numberOfBullets; } }
+
+    public float RespawnTime { get { return respawnTime; } }
 }

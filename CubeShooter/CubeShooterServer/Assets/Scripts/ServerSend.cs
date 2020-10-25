@@ -106,6 +106,17 @@ class ServerSend
 
     }
 
+    public static void PlayerRespawn(int _id, float _seconds)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.playerRespawn))
+        {
+            _packet.Write(_id);
+            _packet.Write(_seconds);
+
+            SendTCPDataToAll(_packet);
+        }
+    }
+
     public static void PlayerDisconnected(int _playerId)
     {
         using (Packet _packet = new Packet((int)ServerPackets.playerDisconnect))
@@ -125,6 +136,16 @@ class ServerSend
             _packet.Write(_transform.rotation);
 
             SendUDPDataToAll(_packet);
+        }
+    }
+
+    public static void DespawnBullet(int _id)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.despawnBullet))
+        {
+            _packet.Write(_id);
+
+            SendTCPDataToAll(_packet);
         }
     }
     #endregion

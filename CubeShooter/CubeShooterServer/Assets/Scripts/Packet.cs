@@ -9,9 +9,11 @@ public enum ServerPackets
     welcome = 1,
     spawnPlayer,
     playerPosition,
+    playerRespawn,
     headRotation,
     playerDisconnect,
-    bulletPosition
+    bulletPosition,
+    despawnBullet
 }
 
 /// <summary>Sent from client to server.</summary>

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
 public class BulletCollider : MonoBehaviour
@@ -44,6 +45,7 @@ public class BulletCollider : MonoBehaviour
                 break;
             //case "Player":
             case "Tank":
+                collision.collider.GetComponent<Player>().Respawn();
                 //collision.collider.gameObject.GetComponent<Explosion>().Explode(gameObject);
                 bulletObejctPool.DestroyToPool(gameObject);
                 break;
@@ -74,8 +76,7 @@ public class BulletCollider : MonoBehaviour
         bulletVelocity = 0f;
         currentBounces = 0;
 
-        //effect.Stop();
-        //effect.transform.parent = null;
+        ServerSend.DespawnBullet(Id);
 
         isActive = false;
     }
@@ -98,5 +99,10 @@ public class BulletCollider : MonoBehaviour
     {
         gameObject.SetActive(false);
         Id = _id;
+    }
+
+    public Player GetOwner()
+    {
+        return owner;
     }
 }

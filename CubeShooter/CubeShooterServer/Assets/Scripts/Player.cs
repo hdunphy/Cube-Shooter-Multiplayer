@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     private float BulletDistanceOffset => tankMovementData.BulletDistanceOffset;
     private float BulletVelocity => tankMovementData.BulletVelocity;
     private int NumberOfBulletBounces => tankMovementData.NumberOfBulletBounces;
+    private float RespawnTime => tankMovementData.RespawnTime;
     public int NumberOfBullets { get { return tankMovementData.NumberOfBullets; } }
 
     /*Rotate Head*/
@@ -42,6 +43,25 @@ public class Player : MonoBehaviour
         BulletObjectPool.Instance.CreateInstances(NumberOfBullets);
         bulletCount = 0;
         nextFire = 0f;
+        isDead = false;
+    }
+
+    public void Respawn()
+    {
+        StartCoroutine(RespawnCoroutine(RespawnTime));
+    }
+
+    private IEnumerator RespawnCoroutine(float seconds)
+    {
+        ServerSend.PlayerRespawn(id, seconds);
+        isDead = true;
+        GameObject tankObject = transform.GetChild(0).gameObject;
+        tankObject.SetActive(false);
+
+        yield return new WaitForSeconds(seconds);
+
+        transform.position = new Vector3(0, 5, 0);
+        tankObject.SetActive(true);
         isDead = false;
     }
 

@@ -36,6 +36,14 @@ public class ClientHandle : MonoBehaviour
         GameManager.players[_id].transform.position = _position;
     }
 
+    public static void PlayerRespawn(Packet _packet)
+    {
+        int _id = _packet.ReadInt();
+        float _seconds = _packet.ReadFloat();
+
+        GameManager.players[_id].Respawn(_seconds);
+    }
+
     public static void HeadRotation(Packet _packet)
     {
         int _id = _packet.ReadInt();
@@ -61,5 +69,11 @@ public class ClientHandle : MonoBehaviour
         GameManager.Instance.MoveBullet(_id, _position, _rotation);
     }
 
-    //Need a function to remove bullets
+    public static void DespawnBullet(Packet _packet)
+    {
+        int _id = _packet.ReadInt();
+
+        Destroy(GameManager.bullets[_id].gameObject);
+        GameManager.bullets.Remove(_id);
+    }
 }
