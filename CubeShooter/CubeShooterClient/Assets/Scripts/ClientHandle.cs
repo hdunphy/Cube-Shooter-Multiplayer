@@ -73,7 +73,8 @@ public class ClientHandle : MonoBehaviour
     {
         int _id = _packet.ReadInt();
 
-        Destroy(GameManager.bullets[_id].gameObject);
+        //Destroy(GameManager.bullets[_id].gameObject);
+        GameManager.bullets[_id].Despawn();
         GameManager.bullets.Remove(_id);
     }
 }
