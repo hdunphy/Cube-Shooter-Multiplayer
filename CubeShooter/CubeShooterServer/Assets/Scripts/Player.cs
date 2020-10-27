@@ -62,6 +62,13 @@ public class Player : MonoBehaviour
 
         transform.position = RespawnLocation.Instance.GetRespawnLocation();
         tankObject.SetActive(true);
+
+        while(transform.position.y > 0.1)
+        {
+            Move(Vector2.zero);
+            yield return null;
+        }
+
         isDead = false;
     }
 
@@ -100,10 +107,13 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (isShooting && bulletCount < NumberOfBullets && Time.time > nextFire)
+        if (!isDead)
         {
-            Fire();
-            nextFire = Time.time + FireRate;
+            if (isShooting && bulletCount < NumberOfBullets && Time.time > nextFire)
+            {
+                Fire();
+                nextFire = Time.time + FireRate;
+            }
         }
     }
 
