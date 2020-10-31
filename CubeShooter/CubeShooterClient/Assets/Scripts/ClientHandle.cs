@@ -20,11 +20,22 @@ public class ClientHandle : MonoBehaviour
 
     public static void SpawnPlayer(Packet _packet)
     {
+        //Player data
         int _id = _packet.ReadInt();
         string _username = _packet.ReadString();
         Vector3 _position = _packet.ReadVector3();
         Quaternion _rotation = _packet.ReadQuaternion();
 
+
+        //Level data
+        Vector3[] _wallPositions = new Vector3[_packet.ReadInt()];
+        for (int i = 0; i < _wallPositions.Length; i++)
+        {
+            _wallPositions[i] = _packet.ReadVector3();
+        }
+
+        //Spawn
+        GameManager.Instance.SpawnWalls(_wallPositions);
         GameManager.Instance.SpawnPlayer(_id, _username, _position, _rotation);
     }
 

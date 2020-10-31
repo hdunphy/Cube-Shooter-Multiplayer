@@ -69,14 +69,20 @@ class ServerSend
         }
     }
 
-    public static void SpawnPlayer(int _toClient, Player _player)
+    public static void SpawnPlayer(int _toClient, Player _player, List<Vector3> wallPositions)
     {
         using (Packet _packet = new Packet((int)ServerPackets.spawnPlayer))
         {
+            //Player Data
             _packet.Write(_player.id);
             _packet.Write(_player.username);
             _packet.Write(_player.transform.position);
             _packet.Write(_player.transform.rotation);
+
+            //Level Data
+            _packet.Write(wallPositions.Count);
+            for(int i = 0; i < wallPositions.Count; i++)
+                _packet.Write(wallPositions[i]);
 
             SendTCPData(_toClient, _packet);
         }

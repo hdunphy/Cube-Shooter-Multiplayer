@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject localPlayerPrefab;
     public GameObject playerPrefab;
+    public GameObject wallPrefab;
+    public Transform wallParent;
     public BulletManager bulletPrefab;
 
     private void Awake()
@@ -42,6 +44,14 @@ public class GameManager : MonoBehaviour
         _player.GetComponent<PlayerManager>().id = _id;
         _player.GetComponent<PlayerManager>().username = _username;
         players.Add(_id, _player.GetComponent<PlayerManager>());
+    }
+
+    public void SpawnWalls(Vector3[] wallPositions)
+    {
+        for(int i = 0; i < wallPositions.Length; i++)
+        {
+            Instantiate(wallPrefab, wallPositions[i], Quaternion.identity, wallParent);
+        }
     }
 
     public void MoveBullet(int _id, Vector3 _position, Quaternion _rotation)

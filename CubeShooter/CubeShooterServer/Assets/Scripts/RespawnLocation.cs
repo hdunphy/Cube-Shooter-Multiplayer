@@ -21,8 +21,8 @@ public class RespawnLocation : MonoBehaviour
             Destroy(this);
         }
     }
-
-    private void OnDrawGizmosSelected()
+    
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.white;
         foreach(Vector3 spawnLocation in Locations)

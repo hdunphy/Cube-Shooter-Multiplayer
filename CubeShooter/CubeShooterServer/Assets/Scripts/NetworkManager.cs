@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class NetworkManager : MonoBehaviour
     public static NetworkManager Instance;
 
     public GameObject playerPrefab;
+    [SerializeField] private LevelSetUp levelSetUp;
 
     private void Awake()
     {
@@ -34,8 +36,13 @@ public class NetworkManager : MonoBehaviour
         Server.Stop();
     }
 
+    public List<Vector3> GetWallPositions()
+    {
+        return levelSetUp.GetWallPositions();
+    }
+
     public Player InstantiatePlayer()
     {
-        return Instantiate(playerPrefab, Vector3.zero, Quaternion.identity).GetComponent<Player>();
+        return Instantiate(playerPrefab, RespawnLocation.Instance.GetRespawnLocation(), Quaternion.identity).GetComponent<Player>();
     }
 }

@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Net;
 using System.Net.Sockets;
+using System.Collections.Generic;
 
 class Client
 {
@@ -23,6 +24,7 @@ class Client
     {
         player = NetworkManager.Instance.InstantiatePlayer();
         player.Initialize(id, _playerName);
+        List<Vector3> wallPositions = NetworkManager.Instance.GetWallPositions();
 
         foreach (Client _client in Server.clients.Values)
         {
@@ -30,7 +32,7 @@ class Client
             {
                 if (_client.id != id)
                 {
-                    ServerSend.SpawnPlayer(id, _client.player);
+                    ServerSend.SpawnPlayer(id, _client.player, wallPositions);
                 }
             }
         }
@@ -38,7 +40,7 @@ class Client
         {
             if (_client.player != null)
             {
-                ServerSend.SpawnPlayer(_client.id, player);
+                ServerSend.SpawnPlayer(_client.id, player, wallPositions);
             }
         }
     }
