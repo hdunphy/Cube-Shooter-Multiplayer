@@ -14,6 +14,8 @@ public class BulletCollider : MonoBehaviour
     private BulletObjectPool bulletObejctPool;
     private int currentBounces = 0;
     private bool isActive = false;
+    private bool isChangingVelocity = false;
+    private Collider currentCollider;
     private int Id;
 
     private void Start()
@@ -34,14 +36,23 @@ public class BulletCollider : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        //Debug.Log($"BulletId: {Id}. Contacts: {collision.contactCount}. From collider {collision.collider.gameObject.GetInstanceID()}");
+
         string tag = collision.collider.tag;
         switch (tag)
         {
             case "Wall":
-                if (currentBounces++ < NumberOfBounces)
+                if (isChangingVelocity)
+                {
+                    break;
+                }
+                else if (currentBounces++ < NumberOfBounces)
                     ChangeVelocity(collision);
                 else
+                {
+                    //Debug.Log($"BulletId: {Id} destroyed by: {collision.collider.gameObject.GetInstanceID()} with bounces: {currentBounces}");
                     bulletObejctPool.DestroyToPool(gameObject);
+                }
                 break;
             //case "Player":
             case "Tank":
@@ -55,8 +66,18 @@ public class BulletCollider : MonoBehaviour
         }
     }
 
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider.Equals(currentCollider))
+            isChangingVelocity = false;
+    }
+
     private void ChangeVelocity(Collision collision)
     {
+        isChangingVelocity = true;
+        currentCollider = collision.collider;
+        //Debug.Log($"BulletId: {Id} has {currentBounces} bounces left. From collider {collision.collider.gameObject.GetInstanceID()}");
+
         ContactPoint contact = collision.GetContact(0);
         var curDir = rb.transform.forward;
         Vector3 newDir = Vector3.Reflect(curDir, contact.normal);
@@ -75,6 +96,8 @@ public class BulletCollider : MonoBehaviour
         rb.velocity = Vector3.zero;
         bulletVelocity = 0f;
         currentBounces = 0;
+        currentCollider = null;
+        isChangingVelocity = false;
 
         ServerSend.DespawnBullet(Id);
 
