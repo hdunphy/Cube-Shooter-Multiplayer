@@ -289,6 +289,7 @@ public class Client : MonoBehaviour
         {
             { (int)ServerPackets.welcome, ClientHandle.Welcome },
             { (int)ServerPackets.spawnPlayer, ClientHandle.SpawnPlayer },
+            { (int)ServerPackets.spawnWalls, ClientHandle.SpawnWalls },
             { (int)ServerPackets.playerPosition, ClientHandle.PlayerPosition },
             { (int)ServerPackets.playerRespawn, ClientHandle.PlayerRespawn },
             { (int)ServerPackets.headRotation, ClientHandle.HeadRotation },

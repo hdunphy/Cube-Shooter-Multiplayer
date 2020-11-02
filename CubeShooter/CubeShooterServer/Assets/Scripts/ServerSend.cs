@@ -25,6 +25,7 @@ class ServerSend
             Server.clients[i].tcp.SendData(_packet);
         }
     }
+
     private static void SendTCPDataToAll(int _exceptClient, Packet _packet)
     {
         _packet.WriteLength();
@@ -69,7 +70,7 @@ class ServerSend
         }
     }
 
-    public static void SpawnPlayer(int _toClient, Player _player, List<Vector3> wallPositions)
+    public static void SpawnPlayer(int _toClient, Player _player)
     {
         using (Packet _packet = new Packet((int)ServerPackets.spawnPlayer))
         {
@@ -79,12 +80,20 @@ class ServerSend
             _packet.Write(_player.transform.position);
             _packet.Write(_player.transform.rotation);
 
+            SendTCPData(_toClient, _packet);
+        }
+    }
+
+    public static void SpawnWalls(int _id, List<Vector3> wallPositions)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.spawnWalls))
+        {
             //Level Data
             _packet.Write(wallPositions.Count);
-            for(int i = 0; i < wallPositions.Count; i++)
+            for (int i = 0; i < wallPositions.Count; i++)
                 _packet.Write(wallPositions[i]);
 
-            SendTCPData(_toClient, _packet);
+            SendTCPData(_id, _packet);
         }
     }
 

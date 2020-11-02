@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
 
     /*Rotate Head*/
     private float turnSmoothVelocity;
-    private float TurnSmoothTime = 0.3f;
+    private const float TurnSmoothTime = 0.3f;
 
     public void Initialize(int id, string username)
     {
@@ -133,7 +133,7 @@ public class Player : MonoBehaviour
     void Fire()
     {
         Quaternion headPosition = headTransform.rotation;
-        Vector3 velocity = (headPosition * Vector3.forward) * BulletVelocity;
+        Vector3 velocity = headPosition * Vector3.forward * BulletVelocity;
         Vector3 position = headTransform.position + BulletDistanceOffset * (headPosition * Vector3.forward).normalized;
 
         GameObject b = BulletObjectPool.Instance.SpawnFromPool(position, headPosition, velocity, BulletVelocity, this, NumberOfBulletBounces);

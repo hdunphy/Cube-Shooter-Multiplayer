@@ -26,7 +26,12 @@ public class ClientHandle : MonoBehaviour
         Vector3 _position = _packet.ReadVector3();
         Quaternion _rotation = _packet.ReadQuaternion();
 
+        //Spawn
+        GameManager.Instance.SpawnPlayer(_id, _username, _position, _rotation);
+    }
 
+    public static void SpawnWalls(Packet _packet)
+    {
         //Level data
         Vector3[] _wallPositions = new Vector3[_packet.ReadInt()];
         for (int i = 0; i < _wallPositions.Length; i++)
@@ -34,9 +39,7 @@ public class ClientHandle : MonoBehaviour
             _wallPositions[i] = _packet.ReadVector3();
         }
 
-        //Spawn
         GameManager.Instance.SpawnWalls(_wallPositions);
-        GameManager.Instance.SpawnPlayer(_id, _username, _position, _rotation);
     }
 
     public static void PlayerPosition(Packet _packet)

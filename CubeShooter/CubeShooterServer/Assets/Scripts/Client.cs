@@ -26,23 +26,30 @@ class Client
         player.Initialize(id, _playerName);
         List<Vector3> wallPositions = NetworkManager.Instance.GetWallPositions();
 
+        ServerSend.SpawnWalls(id, wallPositions);
+
+        //Spawn new player in all other clients
         foreach (Client _client in Server.clients.Values)
         {
             if (_client.player != null)
             {
                 if (_client.id != id)
                 {
-                    ServerSend.SpawnPlayer(id, _client.player, wallPositions);
+                    ServerSend.SpawnPlayer(id, _client.player);
                 }
             }
         }
+
+        //Spawn all players in new player client
         foreach (Client _client in Server.clients.Values)
         {
             if (_client.player != null)
             {
-                ServerSend.SpawnPlayer(_client.id, player, wallPositions);
+                ServerSend.SpawnPlayer(_client.id, player);
             }
         }
+
+        player.Respawn();
     }
 
     private void Disconnect()
