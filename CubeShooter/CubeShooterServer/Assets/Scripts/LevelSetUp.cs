@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class LevelSetUp : MonoBehaviour
 {
 
     [SerializeField] private List<PixelPrefabReference> pixelPrefabReference;
+
     private Texture2D levelBitmap;
 
     public List<Vector3> GetWallPositions()
@@ -35,6 +37,7 @@ public class LevelSetUp : MonoBehaviour
 
         int width = levelBitmap.width;
         int height = levelBitmap.height;
+        Debug.Log($"image loaded with h: {height} and w: {width}");
 
         for(int x = 0; x < width; x++)
         {
@@ -43,20 +46,21 @@ public class LevelSetUp : MonoBehaviour
                 GetPrefabFromPixel(x, y);
             }
         }
+
+        RespawnLocation.Instance.LoadRespawnLocations(transform);
     }
 
     private void GetPrefabFromPixel(int x, int y)
     {
         Color color = levelBitmap.GetPixel(x, y);
 
-        //use for ground
-        if (color.Equals(Color.white))
-            return;
+        PixelPrefabReference prefabRef = pixelPrefabReference.Find(f => f.color.CompareRGB(color));
+        if (prefabRef == null)
+            return; //Not in the list
 
-
-        GameObject go = pixelPrefabReference.Find(f => f.color == color).prefab;
+        GameObject go = prefabRef.prefab;
         Debug.Log($"{color} returns this prefab: {go.name}");
-        Instantiate(go, new Vector3(x, 1, y), Quaternion.identity, transform);
+        Instantiate(go, new Vector3(x, 0.5f, y), Quaternion.identity, transform);
     }
 
     [Serializable]

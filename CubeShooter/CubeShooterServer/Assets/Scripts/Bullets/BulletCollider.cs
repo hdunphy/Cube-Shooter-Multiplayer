@@ -88,11 +88,6 @@ public class BulletCollider : MonoBehaviour
 
     public void OnBulletDespawn()
     {
-        if (owner != null)
-        {
-            owner.RemoveBullet();
-            owner = null;
-        }
         rb.velocity = Vector3.zero;
         bulletVelocity = 0f;
         currentBounces = 0;
@@ -102,6 +97,12 @@ public class BulletCollider : MonoBehaviour
         ServerSend.DespawnBullet(Id);
 
         isActive = false;
+
+        if (owner != null)
+        {
+            owner.RemoveBullet();
+            owner = null;
+        }
     }
 
     public void OnBulletSpawn(Vector3 _position, Quaternion _rotation, Vector3 velcoity, float maxVelocity, Player player, int numberOfBounces)
