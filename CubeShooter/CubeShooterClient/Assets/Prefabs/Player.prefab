@@ -535,6 +535,8 @@ MonoBehaviour:
   id: 0
   username: 
   headTransform: {fileID: 2654360924748374507}
+  tankModel: {fileID: 2204549675059940952}
+  usernameText: {fileID: 7863831610685276484}
 --- !u!1 &3781477507832693669
 GameObject:
   m_ObjectHideFlags: 0

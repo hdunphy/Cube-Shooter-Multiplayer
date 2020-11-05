@@ -53,6 +53,13 @@ public class Client : MonoBehaviour
         tcp.Connect();
     }
 
+    public void ConnectToServer(string _ipAddress)
+    {
+        ip = _ipAddress;
+
+        ConnectToServer();
+    }
+
     private void Disconnect()
     {
         if (isConnected)

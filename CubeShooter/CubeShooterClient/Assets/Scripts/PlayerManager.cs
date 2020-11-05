@@ -10,7 +10,8 @@ public class PlayerManager : MonoBehaviour
     public int id;
     public string username;
     public Transform headTransform;
-    public TextMeshPro usernameText;
+    public GameObject tankModel;
+    public TextMeshProUGUI usernameText;
 
     public void Respawn(float seconds)
     {
@@ -19,11 +20,11 @@ public class PlayerManager : MonoBehaviour
 
     private IEnumerator RespawnCoroutine(float seconds)
     {
-        transform.GetChild(0).gameObject.SetActive(false);
+        tankModel.SetActive(false);
 
         yield return new WaitForSeconds(seconds);
 
-        transform.GetChild(0).gameObject.SetActive(true);
+        tankModel.SetActive(true);
     }
 
     public void SpawnPlayer(int _id, string _username)

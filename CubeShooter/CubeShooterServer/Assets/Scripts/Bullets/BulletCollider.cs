@@ -8,7 +8,6 @@ public class BulletCollider : MonoBehaviour
     private int NumberOfBounces { get; set; }
 
     public Rigidbody rb;
-    //[SerializeField] private VisualEffect smoke;
 
     private Player owner;
     private BulletObjectPool bulletObejctPool;
@@ -36,8 +35,6 @@ public class BulletCollider : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log($"BulletId: {Id}. Contacts: {collision.contactCount}. From collider {collision.collider.gameObject.GetInstanceID()}");
-
         string tag = collision.collider.tag;
         switch (tag)
         {
@@ -50,14 +47,11 @@ public class BulletCollider : MonoBehaviour
                     ChangeVelocity(collision);
                 else
                 {
-                    //Debug.Log($"BulletId: {Id} destroyed by: {collision.collider.gameObject.GetInstanceID()} with bounces: {currentBounces}");
                     bulletObejctPool.DestroyToPool(gameObject);
                 }
                 break;
-            //case "Player":
             case "Tank":
                 collision.collider.GetComponent<Player>().Respawn();
-                //collision.collider.gameObject.GetComponent<Explosion>().Explode(gameObject);
                 bulletObejctPool.DestroyToPool(gameObject);
                 break;
             case "Bullet":
@@ -76,7 +70,6 @@ public class BulletCollider : MonoBehaviour
     {
         isChangingVelocity = true;
         currentCollider = collision.collider;
-        //Debug.Log($"BulletId: {Id} has {currentBounces} bounces left. From collider {collision.collider.gameObject.GetInstanceID()}");
 
         ContactPoint contact = collision.GetContact(0);
         var curDir = rb.transform.forward;
@@ -107,6 +100,11 @@ public class BulletCollider : MonoBehaviour
 
     public void OnBulletSpawn(Vector3 _position, Quaternion _rotation, Vector3 velcoity, float maxVelocity, Player player, int numberOfBounces)
     {
+        //Make sure everything was reset properly
+        currentBounces = 0;
+        currentCollider = null;
+        isChangingVelocity = false;
+
         transform.position = _position;
         transform.rotation = _rotation;
         NumberOfBounces = numberOfBounces;

@@ -1103,7 +1103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 424bb2e8806db3f42b802575866fb61c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localPlayerPrefab: {fileID: 3632561767443984274, guid: 1feb879bd826676439835d8cbb5812b7, type: 3}
+  localPlayerPrefab: {fileID: 734981927017092559, guid: 1c9ef7e75062e6644b0fce969e9f50ff, type: 3}
   playerPrefab: {fileID: 3632561767443984274, guid: 7386225d428151747bea8b612af4aeae, type: 3}
   wallPrefab: {fileID: 574034091060221027, guid: 401224955f8935444a71fa6862317e56, type: 3}
   wallParent: {fileID: 1197227879}
