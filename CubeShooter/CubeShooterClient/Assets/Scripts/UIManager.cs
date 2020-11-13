@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,14 +10,29 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
+    [Header("UI Objects")]
     public GameObject startMenu;
-    public GameObject connectMenu;
-    public GameObject stage;
-    public GameObject uiCamera;
+    public GameObject lobbyMenu;
+    public GameObject connectPopup;
 
-    public InputField userNameField;
-    public InputField ipAddressInput;
-    public Button joinButton;
+
+    [SerializeField] private Button HostButton;
+    [SerializeField] private Button JoinButton;
+    [SerializeField] private Button ConnectButton;
+    [SerializeField] private TMP_InputField IpAddressInput;
+    [SerializeField] private Color UnselectedColor;
+    [SerializeField] private Color SelectedColor;
+
+    private ColorBlock UnselectedColorBlock;
+    private ColorBlock SelectedColorBlock;
+    private const string MyIpAddress = "127.0.0.1";
+    //Gameplay objects
+    //private GameObject stage;
+    //private GameObject uiCamera;
+
+    //private InputField userNameField;
+    //private InputField ipAddressInput;
+    //private Button joinButton;
 
     private void Awake()
     {
@@ -28,9 +44,94 @@ public class UIManager : MonoBehaviour
             Destroy(this);
         }
 
-        ipAddressInput.onValueChanged.AddListener(delegate { EnableJoin(); });
+        SelectedColorBlock = new ColorBlock() { 
+            normalColor = SelectedColor,
+            selectedColor = SelectedColor,
+            pressedColor = SelectedColor,
+            highlightedColor = SelectedColor,
+            colorMultiplier = 1,
+            fadeDuration = .1f
+        };
+        UnselectedColorBlock = new ColorBlock()
+        {
+            normalColor = UnselectedColor,
+            selectedColor = UnselectedColor,
+            pressedColor = UnselectedColor,
+            highlightedColor = UnselectedColor,
+            colorMultiplier = 1,
+            fadeDuration = .1f
+        };
+        //ipAddressInput.onValueChanged.AddListener(delegate { EnableJoin(); });
     }
 
+    #region StartMenu Functions
+    public void PlayButton()
+    {
+        PressJoinButton();
+        connectPopup.SetActive(true);
+    }
+
+    public void MapEditorButton()
+    {
+        Debug.Log("Map Editor");
+    }
+
+    public void OptionsButton()
+    {
+        Debug.Log("Options");
+    }
+
+    public void QuitButton()
+    {
+        Debug.Log("Quit");
+        Application.Quit();
+    }
+    #endregion
+
+    #region Connect Popup Functions
+    public void PressHostButton()
+    {
+        JoinButton.colors = UnselectedColorBlock;
+        HostButton.colors = SelectedColorBlock;
+        IpAddressInput.interactable = false;
+        IpAddressInput.text = MyIpAddress;
+    }
+
+    public void PressJoinButton()
+    {
+        JoinButton.colors = SelectedColorBlock;
+        HostButton.colors = UnselectedColorBlock;
+        IpAddressInput.interactable = true;
+        IpAddressInput.text = "";
+    }
+
+    public void PressPopupCancel()
+    {
+        connectPopup.SetActive(false);
+    }
+
+    public void PressConnectButton()
+    {
+        Client.Instance.ConnectToServer(IpAddressInput.text);
+    }
+
+    public void EnableJoin()
+    {
+        ConnectButton.interactable = false;
+        if (!string.IsNullOrEmpty(IpAddressInput.text))
+        {
+            //check if it is a valid IP Address
+            if (IPAddress.TryParse(IpAddressInput.text, out IPAddress address) &&
+                address.AddressFamily.Equals(AddressFamily.InterNetwork))
+            {
+                ConnectButton.interactable = true;
+            }
+        }
+    }
+    #endregion
+
+    //OLD CODE
+    /*
     public void ConfirmUserName()
     {
         userNameField.interactable = false;
@@ -79,4 +180,5 @@ public class UIManager : MonoBehaviour
             }
         }
     }
+    */
 }
