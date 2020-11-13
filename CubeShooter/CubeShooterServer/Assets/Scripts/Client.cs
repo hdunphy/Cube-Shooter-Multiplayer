@@ -28,6 +28,7 @@ class Client
         userName = "player" + id;
         color = Color.blue;
 
+        Debug.Log($"Send player into Loby {userName}");
         ServerSend.ConnectToLobby();
     }
 
@@ -69,6 +70,7 @@ class Client
 
         ThreadManager.ExecuteOnMainThread(() =>
         {
+            //TODO: only do this in game
             BulletObjectPool.Instance.RemoveBulletsFromPlayer(player);
             //Remove bullets connected to player
             //player isn't always being removed

@@ -295,6 +295,7 @@ public class Client : MonoBehaviour
         packetHandlers = new Dictionary<int, PacketHandler>()
         {
             { (int)ServerPackets.welcome, ClientHandle.Welcome },
+            { (int)ServerPackets.connectToLobby, ClientHandle.ConnectToLobby },
             { (int)ServerPackets.spawnPlayer, ClientHandle.SpawnPlayer },
             { (int)ServerPackets.spawnWalls, ClientHandle.SpawnWalls },
             { (int)ServerPackets.playerPosition, ClientHandle.PlayerPosition },

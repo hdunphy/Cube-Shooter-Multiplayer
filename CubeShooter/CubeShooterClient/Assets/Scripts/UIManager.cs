@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -29,6 +30,7 @@ public class UIManager : MonoBehaviour
     private ColorBlock SelectedColorBlock;
     private const string MyIpAddress = "127.0.0.1";
     private List<PlayerObject> playerObjects;
+
     //Gameplay objects
     //private GameObject stage;
     //private GameObject uiCamera;
@@ -86,6 +88,13 @@ public class UIManager : MonoBehaviour
             GameObject go = Instantiate(playerListObject, playersContent.transform);
             go.GetComponent<PlayerListObject>().SetPlayerObject(playerObject);
         }
+    }
+
+    public void LoadLobby()
+    {
+        connectPopup.SetActive(false);
+        startMenu.SetActive(false);
+        lobbyMenu.SetActive(true);
     }
 
     #region StartMenu Functions

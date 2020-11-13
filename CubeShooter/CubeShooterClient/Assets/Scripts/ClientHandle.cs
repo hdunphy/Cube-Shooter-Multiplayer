@@ -32,6 +32,7 @@ public class ClientHandle : MonoBehaviour
         }
 
         UIManager.Instance.SetPlayerObjects(players);
+        UIManager.Instance.LoadLobby();
     }
 
     public static void SpawnPlayer(Packet _packet)

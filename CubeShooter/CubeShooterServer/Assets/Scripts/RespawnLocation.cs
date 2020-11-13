@@ -41,7 +41,7 @@ public class RespawnLocation : MonoBehaviour
     public void LoadRespawnLocations(Transform levelSetUp)
     {
         int childCount = levelSetUp.childCount;
-        Debug.Log($"Level Child Count: {childCount}");
+        //Debug.Log($"Level Child Count: {childCount}");
         List<GameObject> objectsToDestroy = new List<GameObject>();
 
         for(int i = 0; i < childCount; i++)
@@ -49,7 +49,7 @@ public class RespawnLocation : MonoBehaviour
             var child = levelSetUp.GetChild(i);
             if(child.CompareTag(SpawnPrefab.tag))
             {
-                Debug.Log($"Found spawner at: {child.position}");
+                //Debug.Log($"Found spawner at: {child.position}");
                 Locations.Add(child.position);
                 objectsToDestroy.Add(child.gameObject);
             }

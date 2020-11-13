@@ -16,7 +16,7 @@ class ServerHandle
             Debug.Log($"Player (ID: {_fromClient}) has assumed the wrong client ID ({_clientIdCheck})!");
         }
 
-
+        Server.clients[_fromClient].ConnectToLobby();
         //Server.clients[_fromClient].SendIntoGame(_username);
     }
 

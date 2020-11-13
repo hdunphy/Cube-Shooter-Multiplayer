@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 class ServerSend
@@ -75,14 +76,16 @@ class ServerSend
     {
         using (Packet _packet = new Packet((int)ServerPackets.connectToLobby))
         {
-            _packet.Write(Server.clients.Count);
-            
-            foreach(int _id in Server.clients.Keys)
-            {
-                Client _client = Server.clients[_id];
-                Vector3 color = new Vector3(_client.color.r, _client.color.g, _client.color.b);
+            var activeClients = Server.clients.Values.Where(x => x.tcp.socket != null);
 
-                _packet.Write(_id);
+            _packet.Write(activeClients.Count());
+            Debug.Log($"Number of clients in lobby: {activeClients.Count()}");
+            
+            foreach(Client _client in activeClients)
+            {
+                Vector3 color = new Vector3(_client.color.r, _client.color.g, _client.color.b);
+                
+                _packet.Write(_client.id);
                 _packet.Write(_client.userName);
                 _packet.Write(color);
             }

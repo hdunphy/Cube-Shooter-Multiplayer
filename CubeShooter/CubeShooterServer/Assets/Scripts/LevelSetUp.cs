@@ -59,7 +59,7 @@ public class LevelSetUp : MonoBehaviour
             return; //Not in the list
 
         GameObject go = prefabRef.prefab;
-        Debug.Log($"{color} returns this prefab: {go.name}");
+        //Debug.Log($"{color} returns this prefab: {go.name}");
         Instantiate(go, new Vector3(x, 0.5f, y), Quaternion.identity, transform);
     }
 
