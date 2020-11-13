@@ -10,12 +10,14 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    [Header("UI Objects")]
+    [Header("UI Scenes")]
     public GameObject startMenu;
     public GameObject lobbyMenu;
     public GameObject connectPopup;
+    public GameObject playersContent;
+    public GameObject playerListObject;
 
-
+    [Header("UI Interactables")]
     [SerializeField] private Button HostButton;
     [SerializeField] private Button JoinButton;
     [SerializeField] private Button ConnectButton;
@@ -26,6 +28,7 @@ public class UIManager : MonoBehaviour
     private ColorBlock UnselectedColorBlock;
     private ColorBlock SelectedColorBlock;
     private const string MyIpAddress = "127.0.0.1";
+    private List<PlayerObject> playerObjects;
     //Gameplay objects
     //private GameObject stage;
     //private GameObject uiCamera;
@@ -43,8 +46,13 @@ public class UIManager : MonoBehaviour
             Debug.Log("Instance already exists, destroying object!");
             Destroy(this);
         }
+    }
 
-        SelectedColorBlock = new ColorBlock() { 
+    private void Start()
+    {
+
+        SelectedColorBlock = new ColorBlock()
+        {
             normalColor = SelectedColor,
             selectedColor = SelectedColor,
             pressedColor = SelectedColor,
@@ -61,7 +69,23 @@ public class UIManager : MonoBehaviour
             colorMultiplier = 1,
             fadeDuration = .1f
         };
-        //ipAddressInput.onValueChanged.AddListener(delegate { EnableJoin(); });
+    }
+
+    public void SetPlayerObjects(PlayerObject[] _playerObjects)
+    {
+        int children = playersContent.transform.childCount;
+        for(int i = 0; i < children; i++)
+        {
+            Destroy(playersContent.transform.GetChild(i));
+        }
+
+        playerObjects = new List<PlayerObject>(_playerObjects);
+
+        foreach(PlayerObject playerObject in playerObjects)
+        {
+            GameObject go = Instantiate(playerListObject, playersContent.transform);
+            go.GetComponent<PlayerListObject>().SetPlayerObject(playerObject);
+        }
     }
 
     #region StartMenu Functions

@@ -9,9 +9,12 @@ class Client
     public static int dataBufferSize = 4096;
 
     public int id;
+    public string userName;
+    public Color color;
     public TCP tcp;
     public UDP udp;
     public Player player;
+
 
     public Client(int _clientId)
     {
@@ -20,10 +23,18 @@ class Client
         udp = new UDP(id);
     }
 
-    public void SendIntoGame(string _playerName)
+    public void ConnectToLobby()
+    {
+        userName = "player" + id;
+        color = Color.blue;
+
+        ServerSend.ConnectToLobby();
+    }
+
+    public void SendIntoGame()
     {
         player = NetworkManager.Instance.InstantiatePlayer();
-        player.Initialize(id, _playerName);
+        player.Initialize(id, userName);
         List<Vector3> wallPositions = NetworkManager.Instance.GetWallPositions();
 
         ServerSend.SpawnWalls(id, wallPositions);

@@ -70,6 +70,27 @@ class ServerSend
         }
     }
 
+    //Sends players list of all players
+    public static void ConnectToLobby()
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.connectToLobby))
+        {
+            _packet.Write(Server.clients.Count);
+            
+            foreach(int _id in Server.clients.Keys)
+            {
+                Client _client = Server.clients[_id];
+                Vector3 color = new Vector3(_client.color.r, _client.color.g, _client.color.b);
+
+                _packet.Write(_id);
+                _packet.Write(_client.userName);
+                _packet.Write(color);
+            }
+
+            SendTCPDataToAll(_packet);
+        }
+    }
+
     public static void SpawnPlayer(int _toClient, Player _player)
     {
         using (Packet _packet = new Packet((int)ServerPackets.spawnPlayer))

@@ -9,6 +9,7 @@ public class PlayerManager : MonoBehaviour
 {
     public int id;
     public string username;
+    public Color color;
     public Transform headTransform;
     public GameObject tankModel;
     public TextMeshProUGUI usernameText;

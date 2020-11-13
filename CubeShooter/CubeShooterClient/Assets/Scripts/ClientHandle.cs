@@ -18,6 +18,22 @@ public class ClientHandle : MonoBehaviour
         Client.Instance.udp.Connect(((IPEndPoint)Client.Instance.tcp.socket.Client.LocalEndPoint).Port);
     }
 
+    public static void ConnectToLobby(Packet _packet)
+    {
+        PlayerObject[] players = new PlayerObject[_packet.ReadInt()];
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            int _id = _packet.ReadInt();
+            string _userName = _packet.ReadString();
+            Vector3 _color = _packet.ReadVector3();
+
+            players[i] = new PlayerObject(_id, _userName, _color);
+        }
+
+        UIManager.Instance.SetPlayerObjects(players);
+    }
+
     public static void SpawnPlayer(Packet _packet)
     {
         //Player data

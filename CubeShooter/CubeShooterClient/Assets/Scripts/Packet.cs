@@ -8,6 +8,7 @@ using UnityEngine;
 public enum ServerPackets
 {
     welcome = 1,
+    connectToLobby,
     spawnPlayer,
     spawnWalls,
     playerPosition,
