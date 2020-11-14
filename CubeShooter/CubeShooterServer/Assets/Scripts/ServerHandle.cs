@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,5 +36,12 @@ class ServerHandle
     public static void PlayerShoot(int _fromClient, Packet _packet)
     {
         Server.clients[_fromClient].player.SetIsShooting(_packet.ReadBool());
+    }
+
+    public static void UpdatePlayerInfo(int _fromClient, Packet _packet)
+    {
+        string username = _packet.ReadString();
+        Color userColor = _packet.ReadColor();
+        Server.clients[_fromClient].UpdateInfo(username, userColor);
     }
 }

@@ -32,6 +32,14 @@ class Client
         ServerSend.ConnectToLobby();
     }
 
+    public void UpdateInfo(string _username, Color _userColor)
+    {
+        userName = _username;
+        color = _userColor;
+
+        ServerSend.UpdatePlayerInfo(this);
+    }
+
     public void SendIntoGame()
     {
         player = NetworkManager.Instance.InstantiatePlayer();
@@ -70,11 +78,7 @@ class Client
 
         ThreadManager.ExecuteOnMainThread(() =>
         {
-            //TODO: only do this in game
-            BulletObjectPool.Instance.RemoveBulletsFromPlayer(player);
-            //Remove bullets connected to player
-            //player isn't always being removed
-            UnityEngine.Object.Destroy(player.gameObject);
+            NetworkManager.Instance.GetState().Disconnect(player);
             player = null;
         });
 

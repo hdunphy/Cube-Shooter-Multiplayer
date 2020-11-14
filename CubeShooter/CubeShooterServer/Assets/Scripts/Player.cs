@@ -6,6 +6,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public int id;
+    //TODO: Remove this?
     public string username;
     [SerializeField] private TankData tankMovementData;
     [SerializeField] private Rigidbody rb;
@@ -35,7 +36,7 @@ public class Player : MonoBehaviour
     public void Initialize(int id, string username)
     {
         this.id = id;
-        this.username = username;
+        this.username = username; //TODO: Remove Username
         MousePosition = Vector3.forward;
 
         inputs = new bool[4];

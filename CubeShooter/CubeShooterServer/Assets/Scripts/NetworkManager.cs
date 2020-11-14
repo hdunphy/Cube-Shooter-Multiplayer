@@ -10,6 +10,8 @@ public class NetworkManager : MonoBehaviour
     public GameObject playerPrefab;
     [SerializeField] private LevelSetUp levelSetUp;
 
+    private GameStateMachine StateMachine;
+
     private void Awake()
     {
         if (Instance == null)
@@ -29,6 +31,11 @@ public class NetworkManager : MonoBehaviour
         Application.targetFrameRate = 30;
 
         Server.Start(20, 26950);
+        StateMachine = new GameStateMachine(new Dictionary<StateType, IGameState>()
+        {
+            {StateType.Lobby, new LobbyState() },
+            {StateType.ArenaBattle, new ArenaBattleState() }
+        });
     }
 
     private void OnApplicationQuit()
@@ -44,5 +51,10 @@ public class NetworkManager : MonoBehaviour
     public Player InstantiatePlayer()
     {
         return Instantiate(playerPrefab, RespawnLocation.Instance.GetRespawnLocation(), Quaternion.identity).GetComponent<Player>();
+    }
+
+    public IGameState GetState()
+    {
+        return StateMachine.CurrentState;
     }
 }

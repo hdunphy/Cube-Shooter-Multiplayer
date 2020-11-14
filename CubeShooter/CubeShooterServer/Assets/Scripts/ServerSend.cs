@@ -83,14 +83,24 @@ class ServerSend
             
             foreach(Client _client in activeClients)
             {
-                Vector3 color = new Vector3(_client.color.r, _client.color.g, _client.color.b);
-                
                 _packet.Write(_client.id);
                 _packet.Write(_client.userName);
-                _packet.Write(color);
+                _packet.Write(_client.color);
             }
 
             SendTCPDataToAll(_packet);
+        }
+    }
+
+    public static void UpdatePlayerInfo(Client _client)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.updatePlayerInfo))
+        {
+            _packet.Write(_client.id);
+            _packet.Write(_client.userName);
+            _packet.Write(_client.color);
+
+            SendTCPDataToAll(_client.id, _packet);
         }
     }
 

@@ -26,13 +26,22 @@ public class ClientHandle : MonoBehaviour
         {
             int _id = _packet.ReadInt();
             string _userName = _packet.ReadString();
-            Vector3 _color = _packet.ReadVector3();
+            Color _color = _packet.ReadColor();
 
             players[i] = new PlayerObject(_id, _userName, _color);
         }
 
         UIManager.Instance.SetPlayerObjects(players);
         UIManager.Instance.LoadLobby();
+    }
+
+    public static void UpdatePlayerInfo(Packet _packet)
+    {
+        int _id = _packet.ReadInt();
+        string username = _packet.ReadString();
+        Color _color = _packet.ReadColor();
+
+        UIManager.Instance.UpdatePlayerObject(_id, username, _color);
     }
 
     public static void SpawnPlayer(Packet _packet)
@@ -87,8 +96,15 @@ public class ClientHandle : MonoBehaviour
     {
         int _id = _packet.ReadInt();
 
-        Destroy(GameManager.players[_id].gameObject);
-        GameManager.players.Remove(_id);
+        UIManager.Instance.RemovePlayerObject(_id);
+
+        if (GameManager.players.ContainsKey(_id))
+        {
+            Destroy(GameManager.players[_id].gameObject);
+            GameManager.players.Remove(_id);
+        }
+        else
+            Debug.Log($"Player {_id} missing from players dictionary");
     }
 
     public static void BulletPosition(Packet _packet)

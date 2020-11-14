@@ -179,6 +179,10 @@ public class Client : MonoBehaviour
                     using (Packet _packet = new Packet(_packetBytes))
                     {
                         int _packetId = _packet.ReadInt();
+                        if (!packetHandlers.ContainsKey(_packetId))
+                        {
+                            Debug.LogError($"Key was not found: {_packetId}");
+                        }
                         packetHandlers[_packetId](_packet);
                     }
                 });
@@ -296,6 +300,7 @@ public class Client : MonoBehaviour
         {
             { (int)ServerPackets.welcome, ClientHandle.Welcome },
             { (int)ServerPackets.connectToLobby, ClientHandle.ConnectToLobby },
+            { (int)ServerPackets.updatePlayerInfo, ClientHandle.UpdatePlayerInfo },
             { (int)ServerPackets.spawnPlayer, ClientHandle.SpawnPlayer },
             { (int)ServerPackets.spawnWalls, ClientHandle.SpawnWalls },
             { (int)ServerPackets.playerPosition, ClientHandle.PlayerPosition },

@@ -52,5 +52,16 @@ public class ClientSend : MonoBehaviour
             SendTCPData(_packet);
         }
     }
+
+    public static void UpdatePlayerInfo(string text, Color color)
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.updatePlayerInfo))
+        {
+            _packet.Write(text);
+            _packet.Write(color);
+
+            SendTCPData(_packet);
+        }
+    }
     #endregion
 }

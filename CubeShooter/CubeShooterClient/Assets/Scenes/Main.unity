@@ -225,7 +225,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 46836996}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 640102707}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: PressConnectButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &46836996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2758,11 +2770,13 @@ MonoBehaviour:
   lobbyMenu: {fileID: 741598881}
   connectPopup: {fileID: 1142687521}
   playersContent: {fileID: 1921366888}
-  playerListObject: {fileID: 8889367638430238116, guid: cb244cf9361186b4aa9867fb0d011570, type: 3}
+  playerListObject: {fileID: 6656611593526906044, guid: cb244cf9361186b4aa9867fb0d011570, type: 3}
   HostButton: {fileID: 1258917059}
   JoinButton: {fileID: 97262691}
   ConnectButton: {fileID: 46836995}
   IpAddressInput: {fileID: 927887563}
+  UserNameInput: {fileID: 2096184594}
+  UserColor: {fileID: 554830689}
   UnselectedColor: {r: 0.16078432, g: 0.5019608, b: 0.7254902, a: 1}
   SelectedColor: {r: 0.9058824, g: 0.29803923, b: 0.23529413, a: 1}
 --- !u!114 &640102708
@@ -3339,15 +3353,27 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: Red
-      m_Image: {fileID: 21300000, guid: 9b89f44f8a85da446a2009997ea53b3b, type: 3}
     - m_Text: Blue
       m_Image: {fileID: 21300000, guid: 8d1995415304dc249b120ce9830b6a27, type: 3}
+    - m_Text: Red
+      m_Image: {fileID: 21300000, guid: 9b89f44f8a85da446a2009997ea53b3b, type: 3}
     - m_Text: Green
       m_Image: {fileID: 21300000, guid: b9f474abea127a9428caac3304895bbb, type: 3}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 640102707}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: UpdatePlayerInfo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &735199313
 MonoBehaviour:
@@ -9323,7 +9349,19 @@ MonoBehaviour:
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 640102707}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: UpdatePlayerInfo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []

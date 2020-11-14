@@ -15,12 +15,12 @@ public class PlayerObject
         Color = _color;
     }
 
-    public PlayerObject(int _id, string _userName, Vector3 _colorVector)
-    {
-        Id = _id;
-        UserName = _userName;
-        Color = new Color(_colorVector.x, _colorVector.y, _colorVector.z);
-    }
+    //public PlayerObject(int _id, string _userName, Vector3 _colorVector)
+    //{
+    //    Id = _id;
+    //    UserName = _userName;
+    //    Color = new Color(_colorVector.x, _colorVector.y, _colorVector.z);
+    //}
 
     public void SetUserName(string _userName) => UserName = _userName;
     public void SetColor(Color _color) => Color = _color;

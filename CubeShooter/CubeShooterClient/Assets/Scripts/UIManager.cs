@@ -16,20 +16,25 @@ public class UIManager : MonoBehaviour
     public GameObject lobbyMenu;
     public GameObject connectPopup;
     public GameObject playersContent;
-    public GameObject playerListObject;
+    public PlayerListObject playerListObject;
 
     [Header("UI Interactables")]
     [SerializeField] private Button HostButton;
     [SerializeField] private Button JoinButton;
     [SerializeField] private Button ConnectButton;
     [SerializeField] private TMP_InputField IpAddressInput;
+    [SerializeField] private TMP_InputField UserNameInput;
+    [SerializeField] private TMP_Text UserColor;
+
+    [Header("Color Defaults")]
     [SerializeField] private Color UnselectedColor;
     [SerializeField] private Color SelectedColor;
 
     private ColorBlock UnselectedColorBlock;
     private ColorBlock SelectedColorBlock;
     private const string MyIpAddress = "127.0.0.1";
-    private List<PlayerObject> playerObjects;
+    private Dictionary<int, PlayerListObject> playerObjectsDict;
+
 
     //Gameplay objects
     //private GameObject stage;
@@ -52,6 +57,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        playerObjectsDict = new Dictionary<int, PlayerListObject>();
 
         SelectedColorBlock = new ColorBlock()
         {
@@ -73,20 +79,35 @@ public class UIManager : MonoBehaviour
         };
     }
 
-    public void SetPlayerObjects(PlayerObject[] _playerObjects)
+    #region Client Handle Functions
+    public void SetPlayerObjects(PlayerObject[] _playerObjectArray)
     {
-        int children = playersContent.transform.childCount;
-        for(int i = 0; i < children; i++)
+        foreach (PlayerObject playerObject in _playerObjectArray)
         {
-            Destroy(playersContent.transform.GetChild(i));
+            int playerId = playerObject.Id;
+            if (playerObjectsDict.ContainsKey(playerId))
+                playerObjectsDict[playerId].SetPlayerObject(playerObject);
+            else
+            {
+                PlayerListObject plo = Instantiate(playerListObject, playersContent.transform);
+                plo.SetPlayerObject(playerObject);
+                playerObjectsDict.Add(playerObject.Id, plo);
+            }
         }
+    }
 
-        playerObjects = new List<PlayerObject>(_playerObjects);
+    public void UpdatePlayerObject(int _playerId, string _userName, Color _color)
+    {
+        PlayerObject po = new PlayerObject(_playerId, _userName, _color);
+        playerObjectsDict[_playerId].SetPlayerObject(po);
+    }
 
-        foreach(PlayerObject playerObject in playerObjects)
+    public void RemovePlayerObject(int _playerId)
+    {
+        if (playerObjectsDict.ContainsKey(_playerId))
         {
-            GameObject go = Instantiate(playerListObject, playersContent.transform);
-            go.GetComponent<PlayerListObject>().SetPlayerObject(playerObject);
+            Destroy(playerObjectsDict[_playerId].gameObject);
+            playerObjectsDict.Remove(_playerId);
         }
     }
 
@@ -96,6 +117,7 @@ public class UIManager : MonoBehaviour
         startMenu.SetActive(false);
         lobbyMenu.SetActive(true);
     }
+    #endregion
 
     #region StartMenu Functions
     public void PlayButton()
@@ -160,6 +182,18 @@ public class UIManager : MonoBehaviour
                 ConnectButton.interactable = true;
             }
         }
+    }
+    #endregion
+
+    #region Lobby Menu Functions
+    public void UpdatePlayerInfo()
+    {
+        ColorUtility.TryParseHtmlString(UserColor.text, out Color _color);
+        int id = Client.Instance.myId;
+        string userNameText = string.IsNullOrEmpty(UserNameInput.text) ? "player" + id : UserNameInput.text;
+
+        UpdatePlayerObject(id, userNameText, _color);
+        ClientSend.UpdatePlayerInfo(userNameText, _color);
     }
     #endregion
 

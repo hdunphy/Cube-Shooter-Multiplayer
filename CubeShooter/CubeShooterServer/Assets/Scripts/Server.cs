@@ -123,7 +123,8 @@ class Server
         {
             { (int)ClientPackets.welcomeReceived, ServerHandle.WelcomeReceived },
             { (int)ClientPackets.playerMovment, ServerHandle.PlayerMovement },
-            { (int)ClientPackets.playerShoot, ServerHandle.PlayerShoot }
+            { (int)ClientPackets.playerShoot, ServerHandle.PlayerShoot },
+            { (int)ClientPackets.updatePlayerInfo, ServerHandle.UpdatePlayerInfo }
         };
         Debug.Log("Initialized packets.");
     }

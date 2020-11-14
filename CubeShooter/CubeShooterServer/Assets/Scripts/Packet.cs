@@ -8,6 +8,7 @@ public enum ServerPackets
 {
     welcome = 1,
     connectToLobby,
+    updatePlayerInfo,
     spawnPlayer,
     spawnWalls,
     playerPosition,
@@ -23,7 +24,8 @@ public enum ClientPackets
 {
     welcomeReceived = 1,
     playerMovment,
-    playerShoot
+    playerShoot,
+    updatePlayerInfo
 }
 
 public class Packet : IDisposable
@@ -183,6 +185,18 @@ public class Packet : IDisposable
         Write(_value.y);
         Write(_value.z);
         Write(_value.w);
+    }
+
+    /// <summary>
+    /// Adds a Color to the packet
+    /// </summary>
+    /// <param name="_value">The Color to be added</param>
+    public void Write(Color _value)
+    {
+        Write(_value.r);
+        Write(_value.g);
+        Write(_value.b);
+        Write(_value.a);
     }
     #endregion
 
@@ -364,6 +378,11 @@ public class Packet : IDisposable
     public Quaternion ReadQuarternion(bool _moveReadPos = true)
     {
         return new Quaternion(ReadFloat(_moveReadPos), ReadFloat(_moveReadPos), ReadFloat(_moveReadPos), ReadFloat(_moveReadPos));
+    }
+
+    public Color ReadColor(bool _moveReadPos = true)
+    {
+        return new Color(ReadFloat(_moveReadPos), ReadFloat(_moveReadPos), ReadFloat(_moveReadPos), ReadFloat(_moveReadPos));
     }
     #endregion
 
