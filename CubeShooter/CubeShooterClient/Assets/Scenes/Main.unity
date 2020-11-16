@@ -276,6 +276,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 46836992}
   m_CullTransparentMesh: 0
+--- !u!1 &50763523 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2445356429757294396, guid: 121847a77f878be4189733d0a3dda1d7, type: 3}
+  m_PrefabInstance: {fileID: 1962617057}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &53748335
 GameObject:
   m_ObjectHideFlags: 0
@@ -2902,6 +2907,8 @@ MonoBehaviour:
   lobbyMenu: {fileID: 741598881}
   connectPopup: {fileID: 1142687521}
   playersContent: {fileID: 1921366888}
+  stage: {fileID: 50763523}
+  uiCamera: {fileID: 963194225}
   playerListObject: {fileID: 6656611593526906044, guid: cb244cf9361186b4aa9867fb0d011570, type: 3}
   HostButton: {fileID: 1258917059}
   JoinButton: {fileID: 97262691}

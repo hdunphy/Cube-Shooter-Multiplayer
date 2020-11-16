@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class NetworkManager : MonoBehaviour
@@ -53,8 +54,18 @@ public class NetworkManager : MonoBehaviour
         return Instantiate(playerPrefab, RespawnLocation.Instance.GetRespawnLocation(), Quaternion.identity).GetComponent<Player>();
     }
 
+    public bool AllPlayersReady()
+    {
+        return Server.GetAllActiveClients().Any(x => !x.isReady); //WHere is connected and is not ready
+    }
+
     public IGameState GetState()
     {
         return StateMachine.CurrentState;
+    }
+
+    public void NextState()
+    {
+        StateMachine.UpdateState();
     }
 }

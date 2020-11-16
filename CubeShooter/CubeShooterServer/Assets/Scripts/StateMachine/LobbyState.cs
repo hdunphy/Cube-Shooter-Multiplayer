@@ -1,11 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class LobbyState : IGameState
+﻿public class LobbyState : IGameState
 {
     public void Disconnect(Player player)
     {
 
+    }
+
+    public StateType UpdateState()
+    {
+        foreach (Client _client in Server.GetAllActiveClients())
+            _client.SendIntoGame();
+        return StateType.ArenaBattle;
     }
 }

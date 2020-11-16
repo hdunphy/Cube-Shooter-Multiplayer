@@ -43,6 +43,14 @@ class ServerHandle
         string username = _packet.ReadString();
         Color userColor = _packet.ReadColor();
         bool isReady = _packet.ReadBool();
-        Server.clients[_fromClient].UpdateInfo(username, userColor, isReady);
+
+        if (NetworkManager.Instance.AllPlayersReady())
+        {
+            NetworkManager.Instance.NextState();
+        }
+        else
+        {
+            Server.clients[_fromClient].UpdateInfo(username, userColor, isReady);
+        }
     }
 }

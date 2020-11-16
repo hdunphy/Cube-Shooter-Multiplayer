@@ -76,7 +76,7 @@ class ServerSend
     {
         using (Packet _packet = new Packet((int)ServerPackets.connectToLobby))
         {
-            var activeClients = Server.clients.Values.Where(x => x.tcp.socket != null);
+            var activeClients = Server.GetAllActiveClients();
 
             _packet.Write(activeClients.Count());
             Debug.Log($"Number of clients in lobby: {activeClients.Count()}");

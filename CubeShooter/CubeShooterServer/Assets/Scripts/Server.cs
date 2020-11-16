@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using UnityEngine;
@@ -127,5 +128,10 @@ class Server
             { (int)ClientPackets.updatePlayerInfo, ServerHandle.UpdatePlayerInfo }
         };
         Debug.Log("Initialized packets.");
+    }
+
+    public static IEnumerable<Client> GetAllActiveClients()
+    {
+        return clients.Values.Where(x => x.tcp.socket != null);
     }
 }

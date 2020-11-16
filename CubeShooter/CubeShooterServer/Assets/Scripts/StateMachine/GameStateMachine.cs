@@ -14,4 +14,9 @@ public class GameStateMachine
         _availableStates = states;
         CurrentState = _availableStates.Values.First();
     }
+
+    public void UpdateState()
+    {
+        CurrentState = _availableStates[CurrentState.UpdateState()];
+    }
 }

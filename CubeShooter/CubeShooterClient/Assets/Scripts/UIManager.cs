@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
     public GameObject lobbyMenu;
     public GameObject connectPopup;
     public GameObject playersContent;
+    public GameObject stage;
+    public GameObject uiCamera;
     public PlayerListObject playerListObject;
 
     [Header("UI Interactables")]
@@ -36,11 +38,6 @@ public class UIManager : MonoBehaviour
     private ColorBlock SelectedColorBlock;
     private const string MyIpAddress = "127.0.0.1";
     private Dictionary<int, PlayerListObject> playerObjectsDict;
-
-
-    //Gameplay objects
-    //private GameObject stage;
-    //private GameObject uiCamera;
 
     //private InputField userNameField;
     //private InputField ipAddressInput;
@@ -120,6 +117,15 @@ public class UIManager : MonoBehaviour
         connectPopup.SetActive(false);
         startMenu.SetActive(false);
         lobbyMenu.SetActive(true);
+    }
+
+    public void StartGame()
+    {
+        connectPopup.SetActive(false);
+        startMenu.SetActive(false);
+        lobbyMenu.SetActive(false);
+        stage.SetActive(true);
+        uiCamera.SetActive(false);
     }
     #endregion
 
