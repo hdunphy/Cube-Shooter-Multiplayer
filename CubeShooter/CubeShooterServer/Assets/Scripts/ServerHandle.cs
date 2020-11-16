@@ -42,6 +42,7 @@ class ServerHandle
     {
         string username = _packet.ReadString();
         Color userColor = _packet.ReadColor();
-        Server.clients[_fromClient].UpdateInfo(username, userColor);
+        bool isReady = _packet.ReadBool();
+        Server.clients[_fromClient].UpdateInfo(username, userColor, isReady);
     }
 }

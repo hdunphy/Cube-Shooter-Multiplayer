@@ -22,14 +22,16 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button HostButton;
     [SerializeField] private Button JoinButton;
     [SerializeField] private Button ConnectButton;
+    [SerializeField] private Button ReadyButton;
     [SerializeField] private TMP_InputField IpAddressInput;
     [SerializeField] private TMP_InputField UserNameInput;
     [SerializeField] private TMP_Text UserColor;
 
-    [Header("Color Defaults")]
+    [Header("Defaults")]
     [SerializeField] private Color UnselectedColor;
     [SerializeField] private Color SelectedColor;
 
+    private bool isReady = false;
     private ColorBlock UnselectedColorBlock;
     private ColorBlock SelectedColorBlock;
     private const string MyIpAddress = "127.0.0.1";
@@ -96,9 +98,9 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void UpdatePlayerObject(int _playerId, string _userName, Color _color)
+    public void UpdatePlayerObject(int _playerId, string _userName, Color _color, bool _isReady)
     {
-        PlayerObject po = new PlayerObject(_playerId, _userName, _color);
+        PlayerObject po = new PlayerObject(_playerId, _userName, _color, _isReady);
         playerObjectsDict[_playerId].SetPlayerObject(po);
     }
 
@@ -113,6 +115,8 @@ public class UIManager : MonoBehaviour
 
     public void LoadLobby()
     {
+        isReady = false;
+        ReadyButton.colors = UnselectedColorBlock;
         connectPopup.SetActive(false);
         startMenu.SetActive(false);
         lobbyMenu.SetActive(true);
@@ -192,8 +196,15 @@ public class UIManager : MonoBehaviour
         int id = Client.Instance.myId;
         string userNameText = string.IsNullOrEmpty(UserNameInput.text) ? "player" + id : UserNameInput.text;
 
-        UpdatePlayerObject(id, userNameText, _color);
-        ClientSend.UpdatePlayerInfo(userNameText, _color);
+        UpdatePlayerObject(id, userNameText, _color, isReady);
+        ClientSend.UpdatePlayerInfo(userNameText, _color, isReady);
+    }
+
+    public void PressReadyButton()
+    {
+        isReady = !isReady;
+        ReadyButton.colors = isReady ? SelectedColorBlock : UnselectedColorBlock;
+        UpdatePlayerInfo();
     }
     #endregion
 

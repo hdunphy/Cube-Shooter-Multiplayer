@@ -27,8 +27,9 @@ public class ClientHandle : MonoBehaviour
             int _id = _packet.ReadInt();
             string _userName = _packet.ReadString();
             Color _color = _packet.ReadColor();
+            bool _isReady = _packet.ReadBool();
 
-            players[i] = new PlayerObject(_id, _userName, _color);
+            players[i] = new PlayerObject(_id, _userName, _color, _isReady);
         }
 
         UIManager.Instance.SetPlayerObjects(players);
@@ -40,8 +41,9 @@ public class ClientHandle : MonoBehaviour
         int _id = _packet.ReadInt();
         string username = _packet.ReadString();
         Color _color = _packet.ReadColor();
+        bool _isReady = _packet.ReadBool();
 
-        UIManager.Instance.UpdatePlayerObject(_id, username, _color);
+        UIManager.Instance.UpdatePlayerObject(_id, username, _color, _isReady);
     }
 
     public static void SpawnPlayer(Packet _packet)

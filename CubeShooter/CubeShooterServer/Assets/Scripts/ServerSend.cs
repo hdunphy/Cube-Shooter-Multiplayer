@@ -86,6 +86,7 @@ class ServerSend
                 _packet.Write(_client.id);
                 _packet.Write(_client.userName);
                 _packet.Write(_client.color);
+                _packet.Write(_client.isReady);
             }
 
             SendTCPDataToAll(_packet);
@@ -99,6 +100,7 @@ class ServerSend
             _packet.Write(_client.id);
             _packet.Write(_client.userName);
             _packet.Write(_client.color);
+            _packet.Write(_client.isReady);
 
             SendTCPDataToAll(_client.id, _packet);
         }

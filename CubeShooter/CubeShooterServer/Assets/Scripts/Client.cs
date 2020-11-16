@@ -11,6 +11,8 @@ class Client
     public int id;
     public string userName;
     public Color color;
+    public bool isReady;
+
     public TCP tcp;
     public UDP udp;
     public Player player;
@@ -19,6 +21,7 @@ class Client
     public Client(int _clientId)
     {
         id = _clientId;
+        isReady = false;
         tcp = new TCP(id);
         udp = new UDP(id);
     }
@@ -27,15 +30,17 @@ class Client
     {
         userName = "player" + id;
         color = Color.blue;
+        isReady = false;
 
         Debug.Log($"Send player into Loby {userName}");
         ServerSend.ConnectToLobby();
     }
 
-    public void UpdateInfo(string _username, Color _userColor)
+    public void UpdateInfo(string _username, Color _userColor, bool _isReady)
     {
         userName = _username;
         color = _userColor;
+        isReady = _isReady;
 
         ServerSend.UpdatePlayerInfo(this);
     }
