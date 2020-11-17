@@ -44,7 +44,7 @@ public class BulletObjectPool : MonoBehaviour
         bool earlyBreak = false;
         int i;
 
-        for(i = 0; i < player.NumberOfBullets; i++)
+        for(i = 0; i < player.GetNumberOfBullets(); i++)
         {
             if (bulletQueue.Count == 0)
             {
@@ -57,16 +57,16 @@ public class BulletObjectPool : MonoBehaviour
 
         if (earlyBreak)
         {
-            bulletsToRemove = player.NumberOfBullets - i;
+            bulletsToRemove = player.GetNumberOfBullets() - i;
         }
     }
 
-    public GameObject SpawnFromPool(Vector3 position, Quaternion rotation, Vector3 velocity, float maxVelocity, Player player, int numberOfBounces)
+    public GameObject SpawnFromPool(Vector3 position, Quaternion rotation, Vector3 velocity, float maxVelocity, TankFiringController controller, int numberOfBounces)
     {
         GameObject bullet = bulletQueue.Dequeue();
         bullet.SetActive(true);
 
-        bullet.GetComponent<BulletCollider>().OnBulletSpawn(position, rotation, velocity, maxVelocity, player, numberOfBounces);
+        bullet.GetComponent<BulletCollider>().OnBulletSpawn(position, rotation, velocity, maxVelocity, controller, numberOfBounces);
         return bullet;
     }
 

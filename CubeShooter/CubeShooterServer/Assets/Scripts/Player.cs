@@ -8,43 +8,36 @@ public class Player : MonoBehaviour
     public int id;
     //TODO: Remove this?
     public string username;
-    [SerializeField] private TankData tankMovementData;
+
+    [SerializeField] private TankFiringData FiringData;
     [SerializeField] private Rigidbody rb;
     public Transform headTransform;
     private bool isDead;
 
+    [SerializeField] private float MovementForce = 500;
+    [SerializeField] private float RespawnTime = 3;
+    [SerializeField] private float MaximumVelocity = 3.5f;
     private float forceModifier;
     private bool[] inputs;
     private Vector3 MousePosition;
+    private TankFiringController FiringController;
 
-    /*Firing*/
-    private bool isShooting;
-    private float nextFire;
-    private int bulletCount;
-
-    private float FireRate => tankMovementData.FireRate;
-    private float BulletDistanceOffset => tankMovementData.BulletDistanceOffset;
-    private float BulletVelocity => tankMovementData.BulletVelocity;
-    private int NumberOfBulletBounces => tankMovementData.NumberOfBulletBounces;
-    private float RespawnTime => tankMovementData.RespawnTime;
-    public int NumberOfBullets { get { return tankMovementData.NumberOfBullets; } }
-
-    /*Rotate Head*/
-    private float turnSmoothVelocity;
-    private const float TurnSmoothTime = 0.3f;
-
-    public void Initialize(int id, string username)
+    public void Initialize(int id, string username, Color color)
     {
         this.id = id;
         this.username = username; //TODO: Remove Username
         MousePosition = Vector3.forward;
 
         inputs = new bool[4];
-        forceModifier = tankMovementData.MovementForce * Time.fixedDeltaTime;
-        BulletObjectPool.Instance.CreateInstances(NumberOfBullets);
-        bulletCount = 0;
-        nextFire = 0f;
+        forceModifier = MovementForce * Time.fixedDeltaTime;
+        FiringController = new TankFiringController(FiringData, headTransform);
+
         isDead = false;
+    }
+
+    public int GetNumberOfBullets()
+    {
+        return FiringController.NumberOfBullets;
     }
 
     public void Respawn()
@@ -75,7 +68,7 @@ public class Player : MonoBehaviour
 
     public void SetIsShooting(bool _isShooting)
     {
-        isShooting = _isShooting;
+        FiringController.SetIsShooting(_isShooting);
     }
 
     public void FixedUpdate()
@@ -102,7 +95,8 @@ public class Player : MonoBehaviour
 
             Move(_inputDirection);
 
-            RotateHead(MousePosition);
+            if (FiringController.RotateHead(MousePosition))
+                ServerSend.HeadRotation(this);
         }
     }
 
@@ -110,11 +104,7 @@ public class Player : MonoBehaviour
     {
         if (!isDead)
         {
-            if (isShooting && bulletCount < NumberOfBullets && Time.time > nextFire)
-            {
-                Fire();
-                nextFire = Time.time + FireRate;
-            }
+            FiringController.Update();
         }
     }
 
@@ -122,63 +112,18 @@ public class Player : MonoBehaviour
     {
         Vector3 force = (transform.right * _inputDirection.x + transform.forward * _inputDirection.y) * forceModifier;
         rb.AddForce(force);
-        if (rb.velocity.magnitude > tankMovementData.MaximumVelocity)
+        if (rb.velocity.magnitude > MaximumVelocity)
         {
-            rb.velocity = rb.velocity.normalized * tankMovementData.MaximumVelocity;
+            rb.velocity = rb.velocity.normalized * MaximumVelocity;
         }
 
         //Send to clients
         ServerSend.PlayerPosition(this);
     }
 
-    void Fire()
-    {
-        Quaternion headPosition = headTransform.rotation;
-        Vector3 velocity = headPosition * Vector3.forward * BulletVelocity;
-        Vector3 position = headTransform.position + BulletDistanceOffset * (headPosition * Vector3.forward).normalized;
-
-        GameObject b = BulletObjectPool.Instance.SpawnFromPool(position, headPosition, velocity, BulletVelocity, this, NumberOfBulletBounces);
-    }
-
-    private void RotateHead(Vector3 _mousePosition)
-    {
-        Vector3 direction = _mousePosition - headTransform.position;
-        direction.y = 0;
-
-        if (direction.magnitude >= 0.1f)
-        {
-            direction.Normalize();
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-            RotateHead(targetAngle);
-
-            //Send to clients
-            ServerSend.HeadRotation(this);
-        }
-    }
-
-    private void RotateHead(float targetAngle)
-    {
-        float angle = Mathf.SmoothDampAngle(headTransform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, TurnSmoothTime);
-        headTransform.rotation = Quaternion.Euler(0f, angle, 0f);
-    }
-
     public void SetInput(bool[] _inputs, Vector3 _mousePosition)
     {
         inputs = _inputs;
         MousePosition = _mousePosition;
-    }
-
-    public void RemoveBullet()
-    {
-        bulletCount--;
-        if (bulletCount < 0)
-            Debug.LogWarning("Removed too many bullets");
-    }
-
-    public void AddBullet()
-    {
-        bulletCount++;
-        if (bulletCount > NumberOfBullets)
-            Debug.LogWarning("Added too many bullets");
     }
 }

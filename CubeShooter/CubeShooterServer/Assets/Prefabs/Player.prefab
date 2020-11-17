@@ -290,7 +290,7 @@ GameObject:
   - component: {fileID: 3839264976158914737}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Tank
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -324,9 +324,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   username: 
-  tankMovementData: {fileID: 11400000, guid: 8a88d3737fd6b7640881aab71108e7e6, type: 2}
+  FiringData: {fileID: 11400000, guid: c4be2367ee673164b8d115301a06294c, type: 2}
   rb: {fileID: 7211370006472023761}
   headTransform: {fileID: 7985943769531807856}
+  MovementForce: 500
+  RespawnTime: 3
+  MaximumVelocity: 3.5
 --- !u!54 &7211370006472023761
 Rigidbody:
   m_ObjectHideFlags: 0

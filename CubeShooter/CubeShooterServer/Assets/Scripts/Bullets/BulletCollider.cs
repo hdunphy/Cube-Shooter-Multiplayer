@@ -9,7 +9,7 @@ public class BulletCollider : MonoBehaviour
 
     public Rigidbody rb;
 
-    private Player owner;
+    private TankFiringController owner;
     private BulletObjectPool bulletObejctPool;
     private int currentBounces = 0;
     private bool isActive = false;
@@ -50,6 +50,7 @@ public class BulletCollider : MonoBehaviour
                     bulletObejctPool.DestroyToPool(gameObject);
                 }
                 break;
+            case "Player":
             case "Tank":
                 collision.collider.GetComponent<Player>().Respawn();
                 bulletObejctPool.DestroyToPool(gameObject);
@@ -98,7 +99,7 @@ public class BulletCollider : MonoBehaviour
         }
     }
 
-    public void OnBulletSpawn(Vector3 _position, Quaternion _rotation, Vector3 velcoity, float maxVelocity, Player player, int numberOfBounces)
+    public void OnBulletSpawn(Vector3 _position, Quaternion _rotation, Vector3 velcoity, float maxVelocity, TankFiringController controller, int numberOfBounces)
     {
         //Make sure everything was reset properly
         currentBounces = 0;
@@ -108,7 +109,7 @@ public class BulletCollider : MonoBehaviour
         transform.position = _position;
         transform.rotation = _rotation;
         NumberOfBounces = numberOfBounces;
-        owner = player;
+        owner = controller;
         owner.AddBullet();
 
         rb.velocity = velcoity;
@@ -121,10 +122,5 @@ public class BulletCollider : MonoBehaviour
     {
         gameObject.SetActive(false);
         Id = _id;
-    }
-
-    public Player GetOwner()
-    {
-        return owner;
     }
 }

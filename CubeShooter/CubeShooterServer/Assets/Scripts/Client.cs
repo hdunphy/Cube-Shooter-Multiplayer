@@ -48,7 +48,7 @@ class Client
     public void SendIntoGame()
     {
         player = NetworkManager.Instance.InstantiatePlayer();
-        player.Initialize(id, userName);
+        player.Initialize(id, userName, color);
         List<Vector3> wallPositions = NetworkManager.Instance.GetWallPositions();
 
         ServerSend.SpawnWalls(id, wallPositions);
