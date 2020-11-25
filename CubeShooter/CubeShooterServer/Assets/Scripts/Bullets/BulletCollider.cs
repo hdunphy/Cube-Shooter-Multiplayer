@@ -51,8 +51,11 @@ public class BulletCollider : MonoBehaviour
                 }
                 break;
             case "Player":
-            case "Tank":
                 collision.collider.GetComponent<Player>().Respawn();
+                bulletObejctPool.DestroyToPool(gameObject);
+                break;
+            case "Tank":
+                Destroy(collision.collider.gameObject);
                 bulletObejctPool.DestroyToPool(gameObject);
                 break;
             case "Bullet":

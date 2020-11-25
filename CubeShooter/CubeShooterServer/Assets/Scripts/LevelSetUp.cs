@@ -6,20 +6,19 @@ using UnityEngine;
 
 public class LevelSetUp : MonoBehaviour
 {
-
+    [SerializeField] private string Path;
+    [SerializeField] private Texture2D levelBitmap;
     [SerializeField] private List<PixelPrefabReference> pixelPrefabReference;
-
-    private Texture2D levelBitmap;
 
     public List<Vector3> GetWallPositions()
     {
         List<Vector3> wallPositions = new List<Vector3>();
         int wallCount = transform.childCount;
 
-        for(int i = 0; i < wallCount; i++)
+        for (int i = 0; i < wallCount; i++)
         {
             Transform child = transform.GetChild(i);
-            if(child.CompareTag("Wall"))
+            if (child.CompareTag("Wall"))
                 wallPositions.Add(child.position);
         }
 
@@ -28,20 +27,20 @@ public class LevelSetUp : MonoBehaviour
 
     private void Start()
     {
-        LoadLevelFromPNG("LevelBitmaps/Level");
+        if (levelBitmap == null)
+            levelBitmap = Resources.Load(Path) as Texture2D;
+        LoadLevelFromPNG();
     }
 
-    public void LoadLevelFromPNG(string path)
+    public void LoadLevelFromPNG()
     {
-        levelBitmap = Resources.Load(path) as Texture2D;
-
         int width = levelBitmap.width;
         int height = levelBitmap.height;
         Debug.Log($"image loaded with h: {height} and w: {width}");
 
-        for(int x = 0; x < width; x++)
+        for (int x = 0; x < width; x++)
         {
-            for(int y = 0; y < height; y++)
+            for (int y = 0; y < height; y++)
             {
                 GetPrefabFromPixel(x, y);
             }
