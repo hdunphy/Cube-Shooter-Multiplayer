@@ -96,7 +96,7 @@ public class Player : MonoBehaviour
             Move(_inputDirection);
 
             if (FiringController.RotateHead(MousePosition))
-                ServerSend.HeadRotation(this);
+                ServerSend.HeadRotation(id, headTransform.rotation, true);
         }
     }
 
@@ -118,7 +118,7 @@ public class Player : MonoBehaviour
         }
 
         //Send to clients
-        ServerSend.PlayerPosition(this);
+        ServerSend.TankPosition(id, transform.position, true);
     }
 
     public void SetInput(bool[] _inputs, Vector3 _mousePosition)
@@ -126,4 +126,6 @@ public class Player : MonoBehaviour
         inputs = _inputs;
         MousePosition = _mousePosition;
     }
+
+    public bool GetIsDead() => isDead;
 }

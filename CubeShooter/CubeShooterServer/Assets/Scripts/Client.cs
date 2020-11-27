@@ -49,9 +49,13 @@ class Client
     {
         player = NetworkManager.Instance.InstantiatePlayer();
         player.Initialize(id, userName, color);
-        List<Vector3> wallPositions = NetworkManager.Instance.GetWallPositions();
 
+
+        //Set level Stage
+        List<Vector3> wallPositions = NetworkManager.Instance.GetWallPositions();
+        Enemy[] enemies = NetworkManager.Instance.GetEnemies();
         ServerSend.SpawnWalls(id, wallPositions);
+        ServerSend.SpawnEnemies(id, enemies);
 
         //Spawn new player in all other clients
         foreach (Client _client in Server.clients.Values)

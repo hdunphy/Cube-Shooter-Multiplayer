@@ -9,9 +9,11 @@ public class GameManager : MonoBehaviour
 
     public static Dictionary<int, PlayerManager> players = new Dictionary<int, PlayerManager>();
     public static Dictionary<int, BulletManager> bullets = new Dictionary<int, BulletManager>();
+    public static Dictionary<int, EnemyManager> enemies = new Dictionary<int, EnemyManager>();
 
     public GameObject localPlayerPrefab;
     public GameObject playerPrefab;
+    public GameObject enemyPrefab;
     public GameObject wallPrefab;
     public Transform wallParent;
     public BulletManager bulletPrefab;
@@ -43,6 +45,14 @@ public class GameManager : MonoBehaviour
 
         _player.GetComponent<PlayerManager>().SpawnPlayer(_id, _username);
         players.Add(_id, _player.GetComponent<PlayerManager>());
+    }
+
+    public void SpawnEnemy(int _id, Vector3 _position, Color _color)
+    {
+        GameObject _enemy = Instantiate(enemyPrefab, _position, Quaternion.identity);
+        EnemyManager enemyMan = _enemy.GetComponent<EnemyManager>();
+        enemyMan.Renderer.material.SetColor("_Color", _color);
+        enemies.Add(_id, enemyMan);
     }
 
     public void SpawnWalls(Vector3[] wallPositions)

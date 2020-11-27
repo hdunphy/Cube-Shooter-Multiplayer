@@ -133,24 +133,32 @@ class ServerSend
         }
     }
 
-    public static void PlayerPosition(Player _player)
+    public static void TankPosition(int _id, Vector3 _position, bool _isPlayer)
     {
-        using (Packet _packet = new Packet((int)ServerPackets.playerPosition))
+        using (Packet _packet = new Packet((int)ServerPackets.tankPosition))
         {
-            _packet.Write(_player.id);
-            _packet.Write(_player.transform.position);
+            _packet.Write(_isPlayer);
+            _packet.Write(_id);
+            _packet.Write(_position);
 
             SendUDPDataToAll(_packet);
         }
 
     }
 
-    public static void HeadRotation(Player _player)
+    /// <summary>
+    /// Send the turret head rotation of a tank (either player or enemy)
+    /// </summary>
+    /// <param name="_id">id of the tank either player.id or enemy.GetInstanceID()</param>
+    /// <param name="_rotation">the current rotation</param>
+    /// <param name="_isPlayer">if the tank is a player or an enemey</param>
+    public static void HeadRotation(int _id, Quaternion _rotation, bool _isPlayer)
     {
         using (Packet _packet = new Packet((int)ServerPackets.headRotation))
         {
-            _packet.Write(_player.id);
-            _packet.Write(_player.headTransform.rotation);
+            _packet.Write(_isPlayer);
+            _packet.Write(_id);
+            _packet.Write(_rotation);
 
             SendUDPDataToAll(_packet);
         }
@@ -193,6 +201,33 @@ class ServerSend
     public static void DespawnBullet(int _id)
     {
         using (Packet _packet = new Packet((int)ServerPackets.despawnBullet))
+        {
+            _packet.Write(_id);
+
+            SendTCPDataToAll(_packet);
+        }
+    }
+
+    public static void SpawnEnemies(int _id, Enemy[] _enemies)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.spawnEnemy))
+        {
+            //Level Data
+            _packet.Write(_enemies.Length);
+            foreach(Enemy _enemy in _enemies)
+            {
+                _packet.Write(_enemy.GetInstanceID());
+                _packet.Write(_enemy.transform.position);
+                _packet.Write(_enemy.Color);
+            }
+
+            SendTCPData(_id, _packet);
+        }
+    }
+
+    public static void DespawnEnemy(int _id)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.despawnEnemy))
         {
             _packet.Write(_id);
 

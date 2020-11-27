@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class NetworkManager : MonoBehaviour
 {
@@ -41,12 +42,21 @@ public class NetworkManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        //TODO: Send Stop to client
         Server.Stop();
+        
+
     }
 
     public List<Vector3> GetWallPositions()
     {
         return levelSetUp.GetWallPositions();
+    }
+
+    public Enemy[] GetEnemies()
+    {
+        
+        return FindObjectsOfType<Enemy>();
     }
 
     public Player InstantiatePlayer()

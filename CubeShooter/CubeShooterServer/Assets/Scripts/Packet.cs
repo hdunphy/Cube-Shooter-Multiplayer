@@ -11,12 +11,14 @@ public enum ServerPackets
     updatePlayerInfo,
     spawnPlayer,
     spawnWalls,
-    playerPosition,
+    tankPosition,
     playerRespawn,
     headRotation,
     playerDisconnect,
     bulletPosition,
-    despawnBullet
+    despawnBullet,
+    spawnEnemy,
+    despawnEnemy
 }
 
 /// <summary>Sent from client to server.</summary>

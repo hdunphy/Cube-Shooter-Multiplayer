@@ -72,12 +72,27 @@ public class ClientHandle : MonoBehaviour
         GameManager.Instance.SpawnWalls(_wallPositions);
     }
 
-    public static void PlayerPosition(Packet _packet)
+    public static void TankPosition(Packet _packet)
     {
+        bool _isPlayer = _packet.ReadBool();
         int _id = _packet.ReadInt();
         Vector3 _position = _packet.ReadVector3();
 
-        GameManager.players[_id].transform.position = _position;
+
+        if (_isPlayer)
+        {
+            if (GameManager.players.TryGetValue(_id, out PlayerManager playerManager))
+                playerManager.transform.position = _position;
+            else
+                DictionaryMissingKeyError("Player", _id);
+        }
+        else
+        {
+            if (GameManager.enemies.TryGetValue(_id, out EnemyManager enemyManager))
+                enemyManager.transform.position = _position;
+            else
+                DictionaryMissingKeyError("Enemy", _id);
+        }
     }
 
     public static void PlayerRespawn(Packet _packet)
@@ -90,10 +105,24 @@ public class ClientHandle : MonoBehaviour
 
     public static void HeadRotation(Packet _packet)
     {
+        bool isPlayer = _packet.ReadBool();
         int _id = _packet.ReadInt();
         Quaternion _rotation = _packet.ReadQuaternion();
 
-        GameManager.players[_id].headTransform.rotation = _rotation;
+        if (isPlayer)
+        {
+            if (GameManager.players.TryGetValue(_id, out PlayerManager playerManager))
+                playerManager.headTransform.rotation = _rotation;
+            else
+                DictionaryMissingKeyError("Player", _id);
+        }
+        else
+        {
+            if (GameManager.enemies.TryGetValue(_id, out EnemyManager enemyManager))
+                enemyManager.headTransform.rotation = _rotation;
+            else
+                DictionaryMissingKeyError("Enemy", _id);
+        }
     }
 
     public static void PlayerDisconnected(Packet _packet)
@@ -108,7 +137,7 @@ public class ClientHandle : MonoBehaviour
             GameManager.players.Remove(_id);
         }
         else
-            Debug.Log($"Player {_id} missing from players dictionary");
+            DictionaryMissingKeyError("Player", _id);
     }
 
     public static void BulletPosition(Packet _packet)
@@ -127,5 +156,43 @@ public class ClientHandle : MonoBehaviour
         //Destroy(GameManager.bullets[_id].gameObject);
         GameManager.bullets[_id].Despawn();
         GameManager.bullets.Remove(_id);
+    }
+
+    public static void SpawnEnemy(Packet _packet)
+    {
+        int id;
+        Vector3 position;
+        Color color;
+
+        int count = _packet.ReadInt();
+        Debug.Log($"Found {count} enemies");
+
+        for(int i = 0; i < count; i++)
+        {
+            id = _packet.ReadInt();
+            position = _packet.ReadVector3();
+            color = _packet.ReadColor();
+            GameManager.Instance.SpawnEnemy(id, position, color);
+        }
+    }
+
+    public static void DespawnEnemy(Packet _packet)
+    {
+        int _id = _packet.ReadInt();
+
+        if(GameManager.enemies.TryGetValue(_id, out EnemyManager enemyManager))
+        {
+            Destroy(enemyManager.gameObject);
+            GameManager.enemies.Remove(_id);
+        }
+        else
+        {
+            DictionaryMissingKeyError("Enemy", _id);
+        }
+    }
+
+    private static void DictionaryMissingKeyError(string type, int id)
+    {
+        Debug.LogWarning($"{type} {id} not found in dictionary");
     }
 }

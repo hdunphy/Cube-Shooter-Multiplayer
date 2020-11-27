@@ -303,12 +303,14 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.updatePlayerInfo, ClientHandle.UpdatePlayerInfo },
             { (int)ServerPackets.spawnPlayer, ClientHandle.SpawnPlayer },
             { (int)ServerPackets.spawnWalls, ClientHandle.SpawnWalls },
-            { (int)ServerPackets.playerPosition, ClientHandle.PlayerPosition },
+            { (int)ServerPackets.tankPosition, ClientHandle.TankPosition },
             { (int)ServerPackets.playerRespawn, ClientHandle.PlayerRespawn },
             { (int)ServerPackets.headRotation, ClientHandle.HeadRotation },
             { (int)ServerPackets.playerDisconnect, ClientHandle.PlayerDisconnected },
             { (int)ServerPackets.bulletPosition, ClientHandle.BulletPosition },
-            { (int)ServerPackets.despawnBullet, ClientHandle.DespawnBullet }
+            { (int)ServerPackets.despawnBullet, ClientHandle.DespawnBullet },
+            { (int)ServerPackets.spawnEnemy, ClientHandle.SpawnEnemy },
+            { (int)ServerPackets.despawnEnemy, ClientHandle.DespawnEnemy }
         };
         Debug.Log("Initialized packets.");
     }

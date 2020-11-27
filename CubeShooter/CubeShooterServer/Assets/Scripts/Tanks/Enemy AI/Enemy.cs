@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
@@ -9,10 +6,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform headTransform;
     public float MaxVisionDistance = 50f;
     public bool debug = false;
+    public Color Color;
 
     public Player TargetedPlayer { get; private set; }
 
-    private int SearchAngle = 180;
+    //Should make these come from a scriptable object?
+    private const int SearchAngle = 180;
     private Vector3 ShootDirection = Vector3.zero;
     private const int DegreeOffset = 1;
     private const float ClosestPlayerOffset = 10f;
@@ -26,24 +25,48 @@ public class Enemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //FindClosestPlayer();
+
         SetShooting();
+        FiringController.Update();
+
+        /*
+         * if(CanMove)
+         * {
+         *      move();
+         *      SendServer.SendPosition();
+         * }    
+         */
+    }
+
+    private void FixedUpdate()
+    {
+        ServerSend.HeadRotation(GetInstanceID(), headTransform.rotation, false);
+    }
+
+    public void Destroy()
+    {
+        ServerSend.DespawnEnemy(GetInstanceID());
+        Destroy(gameObject);
     }
 
     private void FindClosestPlayer()
     {
         foreach (Player _player in FindObjectsOfType<Player>())
         { //TODO: improve performance ?
-            if (TargetedPlayer == null)
-                TargetedPlayer = _player;
-            else if (TargetedPlayer != _player)
+            if (!_player.GetIsDead())
             {
-                float nextPlayerDistance = Mathf.Abs(Vector3.Distance(transform.position, _player.transform.position));
-                float currentPlayerDistance = Mathf.Abs(Vector3.Distance(transform.position, TargetedPlayer.transform.position));
-                if (nextPlayerDistance + ClosestPlayerOffset < currentPlayerDistance)
+                if (TargetedPlayer == null)
                     TargetedPlayer = _player;
+                else if (TargetedPlayer != _player)
+                {
+                    float nextPlayerDistance = Mathf.Abs(Vector3.Distance(transform.position, _player.transform.position));
+                    float currentPlayerDistance = Mathf.Abs(Vector3.Distance(transform.position, TargetedPlayer.transform.position));
+                    if (nextPlayerDistance + ClosestPlayerOffset < currentPlayerDistance)
+                        TargetedPlayer = _player;
+                }
             }
         }
     }

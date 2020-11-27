@@ -55,7 +55,7 @@ public class BulletCollider : MonoBehaviour
                 bulletObejctPool.DestroyToPool(gameObject);
                 break;
             case "Tank":
-                Destroy(collision.collider.gameObject);
+                collision.collider.GetComponent<Enemy>().Destroy();
                 bulletObejctPool.DestroyToPool(gameObject);
                 break;
             case "Bullet":
