@@ -44,8 +44,6 @@ public class NetworkManager : MonoBehaviour
     {
         //TODO: Send Stop to client
         Server.Stop();
-        
-
     }
 
     public List<Vector3> GetWallPositions()
