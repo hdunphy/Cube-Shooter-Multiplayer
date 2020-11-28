@@ -3,36 +3,53 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class LevelSetUp : MonoBehaviour
 {
     [SerializeField] private string Path;
     [SerializeField] private Texture2D levelBitmap;
     [SerializeField] private List<PixelPrefabReference> pixelPrefabReference;
+    [SerializeField] private NavMeshSurface navMeshSurface;
 
-    public List<Vector3> GetWallPositions()
-    {
-        List<Vector3> wallPositions = new List<Vector3>();
-        int wallCount = transform.childCount;
+    private bool setBuildNavMesh;
 
-        for (int i = 0; i < wallCount; i++)
-        {
-            Transform child = transform.GetChild(i);
-            if (child.CompareTag("Wall"))
-                wallPositions.Add(child.position);
-        }
+    //public List<Vector3> GetWallPositions()
+    //{
+    //    List<Vector3> wallPositions = new List<Vector3>();
+    //    int wallCount = transform.childCount;
 
-        return wallPositions;
-    }
+    //    for (int i = 0; i < wallCount; i++)
+    //    {
+    //        Transform child = transform.GetChild(i);
+    //        if (child.CompareTag("Wall"))
+    //            wallPositions.Add(child.position);
+    //    }
+
+    //    return wallPositions;
+    //}
 
     private void Start()
     {
+        setBuildNavMesh = false;
         if (levelBitmap == null)
             levelBitmap = Resources.Load(Path) as Texture2D;
         LoadLevelFromPNG();
     }
 
-    public void LoadLevelFromPNG()
+    public void SetBuildNaveMesh(bool _setBuildNavMesh)
+    {
+        setBuildNavMesh = _setBuildNavMesh;
+    }
+
+    //For later
+    public void SetLevel(Texture2D level)
+    {
+        levelBitmap = level;
+        LoadLevelFromPNG();
+    }
+
+    private void LoadLevelFromPNG()
     {
         int width = levelBitmap.width;
         int height = levelBitmap.height;
@@ -46,7 +63,12 @@ public class LevelSetUp : MonoBehaviour
             }
         }
 
-        RespawnLocation.Instance.LoadRespawnLocations(transform);
+        if (setBuildNavMesh)
+        {
+            Debug.Log("Building Nav Mesh");
+            navMeshSurface.BuildNavMesh();
+            setBuildNavMesh = false;
+        }
     }
 
     private void GetPrefabFromPixel(int x, int y)
@@ -57,15 +79,16 @@ public class LevelSetUp : MonoBehaviour
         if (prefabRef == null)
             return; //Not in the list
 
-        GameObject go = prefabRef.prefab;
+        LoadableGameObject go = Instantiate(prefabRef.prefab, new Vector3(x, 0.5f, y), Quaternion.identity, transform);
         //Debug.Log($"{color} returns this prefab: {go.name}");
-        Instantiate(go, new Vector3(x, 0.5f, y), Quaternion.identity, transform);
+
+        go.OnLoad();
     }
 
     [Serializable]
     private class PixelPrefabReference
     {
         public Color color;
-        public GameObject prefab;
+        public LoadableGameObject prefab;
     }
 }

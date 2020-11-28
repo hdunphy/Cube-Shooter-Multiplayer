@@ -7,7 +7,7 @@ public class GameStateMachine
 {
     private Dictionary<StateType, IGameState> _availableStates;
     public IGameState CurrentState { get; private set; }
-    public event Action<IGameState> OnStateChange;
+    //public event Action<IGameState> OnStateChange;
 
     public GameStateMachine(Dictionary<StateType, IGameState> states)
     {

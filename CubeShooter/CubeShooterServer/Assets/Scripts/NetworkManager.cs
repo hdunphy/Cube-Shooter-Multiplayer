@@ -40,6 +40,7 @@ public class NetworkManager : MonoBehaviour
         });
     }
 
+
     private void OnApplicationQuit()
     {
         //TODO: Send Stop to client
@@ -48,13 +49,16 @@ public class NetworkManager : MonoBehaviour
 
     public List<Vector3> GetWallPositions()
     {
-        return levelSetUp.GetWallPositions();
+        return FindObjectsOfType<Wall>().Select(x => x.transform.position).ToList();
     }
 
     public Enemy[] GetEnemies()
     {
-        
         return FindObjectsOfType<Enemy>();
+    }
+    public void SetBuildNavMesh(bool _setNavMesh)
+    {
+        levelSetUp.SetBuildNaveMesh(_setNavMesh);
     }
 
     public Player InstantiatePlayer()

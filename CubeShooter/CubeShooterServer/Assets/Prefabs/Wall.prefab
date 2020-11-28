@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 314397319386366614}
   - component: {fileID: 6650845907072740339}
   - component: {fileID: 136489500979233378}
+  - component: {fileID: 5885747062106111332}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Wall
@@ -95,3 +96,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5885747062106111332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574034091060221027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a557da918aaba534c8cb6e5548ba21f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

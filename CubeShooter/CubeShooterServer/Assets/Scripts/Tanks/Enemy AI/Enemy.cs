@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : LoadableGameObject
 {
     [SerializeField] private TankFiringData tankFiringData;
     [SerializeField] private Transform headTransform;
@@ -9,6 +10,7 @@ public class Enemy : MonoBehaviour
     public Color Color;
 
     public Player TargetedPlayer { get; private set; }
+    public event Action<Player> UpdateTargetedPlayer;
 
     //Should make these come from a scriptable object?
     private const int SearchAngle = 180;
@@ -59,13 +61,13 @@ public class Enemy : MonoBehaviour
             if (!_player.GetIsDead())
             {
                 if (TargetedPlayer == null)
-                    TargetedPlayer = _player;
+                    SetTargetedPlayer(_player);
                 else if (TargetedPlayer != _player)
                 {
                     float nextPlayerDistance = Mathf.Abs(Vector3.Distance(transform.position, _player.transform.position));
                     float currentPlayerDistance = Mathf.Abs(Vector3.Distance(transform.position, TargetedPlayer.transform.position));
                     if (nextPlayerDistance + ClosestPlayerOffset < currentPlayerDistance)
-                        TargetedPlayer = _player;
+                        SetTargetedPlayer(_player);
                 }
             }
         }
@@ -189,5 +191,19 @@ public class Enemy : MonoBehaviour
         }
 
         return hitPlayer;
+    }
+
+    private void SetTargetedPlayer(Player _targetedPlayer)
+    {
+        TargetedPlayer = _targetedPlayer;
+        UpdateTargetedPlayer?.Invoke(_targetedPlayer);
+    }
+
+    public override void OnLoad()
+    {
+        if(TryGetComponent(out EnemyMovement enemyMovement))
+        {
+            enemyMovement.OnLoad();
+        }
     }
 }

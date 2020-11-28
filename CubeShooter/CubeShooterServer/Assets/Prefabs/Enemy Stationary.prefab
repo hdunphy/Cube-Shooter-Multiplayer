@@ -16,6 +16,7 @@ MonoBehaviour:
   headTransform: {fileID: 3160068244361513650}
   MaxVisionDistance: 50
   debug: 0
+  Color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1001 &4974530212894536386
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -73,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8508619719933043844, guid: e46b79f24865d9a41b23c5a850240bfb, type: 3}
       propertyPath: m_Name
-      value: Enemy Variant
+      value: Enemy Stationary
       objectReference: {fileID: 0}
     - target: {fileID: 8508619719933043844, guid: e46b79f24865d9a41b23c5a850240bfb, type: 3}
       propertyPath: m_TagString
@@ -81,6 +82,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1694848555620045752, guid: e46b79f24865d9a41b23c5a850240bfb, type: 3}
+    - {fileID: 1725963953201871330, guid: e46b79f24865d9a41b23c5a850240bfb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e46b79f24865d9a41b23c5a850240bfb, type: 3}
 --- !u!1 &3683280745162921542 stripped
 GameObject:

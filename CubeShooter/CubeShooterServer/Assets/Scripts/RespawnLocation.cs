@@ -38,6 +38,11 @@ public class RespawnLocation : MonoBehaviour
         return Locations[randIndex] + new Vector3(0, DropHeight, 0);
     }
 
+    public void AddRespawnLocation(Vector3 location)
+    {
+        Locations.Add(location);
+    }
+
     public void LoadRespawnLocations(Transform levelSetUp)
     {
         int childCount = levelSetUp.childCount;
