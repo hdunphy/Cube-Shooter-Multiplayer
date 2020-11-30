@@ -72,8 +72,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyStates: 000000000200000001000000
   bulletDetector: {fileID: 5999278726951003776}
-  StrafeDistance: 12
-  ChaseDistance: 15
+  MovementData: {fileID: 11400000, guid: 2a5011491a211114fb56b018704b8455, type: 2}
 --- !u!195 &5020974587128435385
 NavMeshAgent:
   m_ObjectHideFlags: 0

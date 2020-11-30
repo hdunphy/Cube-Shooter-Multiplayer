@@ -9,12 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d24519dd41d15934993a30120acd387a, type: 3}
-  m_Name: PlayerFiring
+  m_Script: {fileID: 11500000, guid: a557da918aaba534c8cb6e5548ba21f2, type: 3}
+  m_Name: WallLoader
   m_EditorClassIdentifier: 
-  fireRate: 1
-  bulletVelocity: 7
-  numberOfBulletBounces: 1
-  numberOfBullets: 5
-  turnSmoothTime: 0.3
-  baseColor: {r: 0, g: 0, b: 1, a: 1}
+  wallPrefab: {fileID: 574034091060221027, guid: 801baaea3921f2249812f7e06f25a757, type: 3}

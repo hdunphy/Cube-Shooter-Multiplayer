@@ -1,29 +1,31 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class Enemy : LoadableGameObject
+public class Enemy : MonoBehaviour
 {
-    [SerializeField] private TankFiringData tankFiringData;
+    [SerializeField] private EnemyFiringData enemyFiringData;
     [SerializeField] private Transform headTransform;
     public float MaxVisionDistance = 50f;
     public bool debug = false;
-    public Color Color;
+    public Color Color => enemyFiringData.GetBaseColor();
 
     public Player TargetedPlayer { get; private set; }
+
     public event Action<Player> UpdateTargetedPlayer;
 
     //Should make these come from a scriptable object?
     private const int SearchAngle = 180;
-    private Vector3 ShootDirection = Vector3.zero;
     private const int DegreeOffset = 1;
     private const float ClosestPlayerOffset = 10f;
 
+    private Vector3 ShootDirection = Vector3.zero;
     private TankFiringController FiringController;
 
     // Start is called before the first frame update
     void Start()
     {
-        FiringController = new TankFiringController(tankFiringData, headTransform);
+        FiringController = new TankFiringController(enemyFiringData, headTransform);
     }
 
     // Update is called once per frame
@@ -130,7 +132,7 @@ public class Enemy : LoadableGameObject
                     }
                     break;
                 case "Wall":
-                    if (currentNumberOfBounces < tankFiringData.NumberOfBulletBounces)
+                    if (currentNumberOfBounces < enemyFiringData.NumberOfBulletBounces)
                     { //If the bullet can bounce check path of the bullet
                         float remDistance = distance - Vector3.Distance(from, objectHit.point);
                         Vector3 newFrom = objectHit.point;
@@ -199,11 +201,25 @@ public class Enemy : LoadableGameObject
         UpdateTargetedPlayer?.Invoke(_targetedPlayer);
     }
 
-    public override void OnLoad()
+    public TankFiringData GetFiringData() => enemyFiringData;
+
+    public void SetFiringData(EnemyFiringData _enemyFiringData)
     {
-        if(TryGetComponent(out EnemyMovement enemyMovement))
-        {
-            enemyMovement.OnLoad();
-        }
+        enemyFiringData = _enemyFiringData;
     }
+
+    //public override void OnLoad()
+    //{
+    //    if(enemyFiringData.GetType().Name == "EnemyMovementData")
+    //    {
+    //        NetworkManager.Instance.SetBuildNavMesh(true);
+    //        GetComponent<NavMeshAgent>().enabled = true;
+    //        GetComponent<EnemyMovement>().enabled = true;
+    //    }
+
+    //    if(TryGetComponent(out EnemyMovement enemyMovement))
+    //    {
+    //        enemyMovement.OnLoad();
+    //    }
+    //}
 }

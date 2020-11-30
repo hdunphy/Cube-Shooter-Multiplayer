@@ -6,7 +6,6 @@ public class RespawnLocation : MonoBehaviour
 {
     [SerializeField] private List<Vector3> Locations;
     [SerializeField] private float DropHeight;
-    [SerializeField] private GameObject SpawnPrefab;
 
     public static RespawnLocation Instance;
 
@@ -43,26 +42,26 @@ public class RespawnLocation : MonoBehaviour
         Locations.Add(location);
     }
 
-    public void LoadRespawnLocations(Transform levelSetUp)
-    {
-        int childCount = levelSetUp.childCount;
-        //Debug.Log($"Level Child Count: {childCount}");
-        List<GameObject> objectsToDestroy = new List<GameObject>();
+    //public void LoadRespawnLocations(Transform levelSetUp)
+    //{
+    //    int childCount = levelSetUp.childCount;
+    //    //Debug.Log($"Level Child Count: {childCount}");
+    //    List<GameObject> objectsToDestroy = new List<GameObject>();
 
-        for(int i = 0; i < childCount; i++)
-        {
-            var child = levelSetUp.GetChild(i);
-            if(child.CompareTag(SpawnPrefab.tag))
-            {
-                //Debug.Log($"Found spawner at: {child.position}");
-                Locations.Add(child.position);
-                objectsToDestroy.Add(child.gameObject);
-            }
-        }
+    //    for(int i = 0; i < childCount; i++)
+    //    {
+    //        var child = levelSetUp.GetChild(i);
+    //        if(child.CompareTag(SpawnPrefab.tag))
+    //        {
+    //            //Debug.Log($"Found spawner at: {child.position}");
+    //            Locations.Add(child.position);
+    //            objectsToDestroy.Add(child.gameObject);
+    //        }
+    //    }
 
-        foreach(GameObject go in objectsToDestroy)
-        {
-            Destroy(go);
-        }
-    }
+    //    foreach(GameObject go in objectsToDestroy)
+    //    {
+    //        Destroy(go);
+    //    }
+    //}
 }

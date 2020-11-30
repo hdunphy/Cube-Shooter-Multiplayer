@@ -9,7 +9,7 @@ public class LevelSetUp : MonoBehaviour
 {
     [SerializeField] private string Path;
     [SerializeField] private Texture2D levelBitmap;
-    [SerializeField] private List<PixelPrefabReference> pixelPrefabReference;
+    [SerializeField] private List<LoadableGameObject> loadableGameObjects;
     [SerializeField] private NavMeshSurface navMeshSurface;
 
     private bool setBuildNavMesh;
@@ -75,20 +75,14 @@ public class LevelSetUp : MonoBehaviour
     {
         Color color = levelBitmap.GetPixel(x, y);
 
-        PixelPrefabReference prefabRef = pixelPrefabReference.Find(f => f.color.CompareRGB(color));
+        LoadableGameObject prefabRef = loadableGameObjects.Find(f => f.GetBaseColor().CompareRGB(color));
         if (prefabRef == null)
             return; //Not in the list
+        prefabRef.OnLoad(new Vector3(x, 0.5f, y), transform);
 
-        LoadableGameObject go = Instantiate(prefabRef.prefab, new Vector3(x, 0.5f, y), Quaternion.identity, transform);
+        //LoadableGameObject go = Instantiate(prefabRef, new Vector3(x, 0.5f, y), Quaternion.identity, transform);
         //Debug.Log($"{color} returns this prefab: {go.name}");
 
-        go.OnLoad();
-    }
-
-    [Serializable]
-    private class PixelPrefabReference
-    {
-        public Color color;
-        public LoadableGameObject prefab;
+        //go.OnLoad();
     }
 }

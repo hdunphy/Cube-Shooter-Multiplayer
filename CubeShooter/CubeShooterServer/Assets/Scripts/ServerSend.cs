@@ -133,13 +133,14 @@ class ServerSend
         }
     }
 
-    public static void TankPosition(int _id, Vector3 _position, bool _isPlayer)
+    public static void TankPosition(int _id, Vector3 _position, Quaternion _rotation, bool _isPlayer)
     {
         using (Packet _packet = new Packet((int)ServerPackets.tankPosition))
         {
             _packet.Write(_isPlayer);
             _packet.Write(_id);
             _packet.Write(_position);
+            _packet.Write(_rotation);
 
             SendUDPDataToAll(_packet);
         }

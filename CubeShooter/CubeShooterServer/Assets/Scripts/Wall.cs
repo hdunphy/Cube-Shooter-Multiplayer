@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wall : LoadableGameObject
+public class Wall : MonoBehaviour
 {
-    public override void OnLoad()
-    {
-
-    }
+    // TODO: Add Mine Behavior    
 }

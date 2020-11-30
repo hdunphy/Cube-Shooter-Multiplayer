@@ -9,12 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d24519dd41d15934993a30120acd387a, type: 3}
-  m_Name: PlayerFiring
+  m_Script: {fileID: 11500000, guid: 18d34e99c6349f44db7c08b025ab7191, type: 3}
+  m_Name: Enemy Move 3 Bullet
   m_EditorClassIdentifier: 
   fireRate: 1
   bulletVelocity: 7
   numberOfBulletBounces: 1
-  numberOfBullets: 5
+  numberOfBullets: 3
   turnSmoothTime: 0.3
-  baseColor: {r: 0, g: 0, b: 1, a: 1}
+  baseColor: {r: 0.6981132, g: 0, b: 0, a: 1}
+  navMeshAngularSpeed: 120
+  navMeshAcceleration: 8
+  navMeshVelocity: 3
+  strafeDistance: 12
+  chaseDistance: 15

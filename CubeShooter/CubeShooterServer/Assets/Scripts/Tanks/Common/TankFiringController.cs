@@ -7,7 +7,6 @@ public class TankFiringController
     private TankFiringData FiringData;
 
     public int NumberOfBullets => FiringData.NumberOfBullets;
-    private float BulletDistanceOffset => FiringData.BulletDistanceOffset;
     private float BulletVelocity => FiringData.BulletVelocity;
     private float FireRate => FiringData.FireRate;
     private int NumberOfBulletBounces => FiringData.NumberOfBulletBounces;
@@ -20,6 +19,7 @@ public class TankFiringController
     private bool isShooting = false;
     private float nextFire;
     private int BulletCount;
+    private const float BulletDistanceOffset = 1.5f;
 
     public TankFiringController(TankFiringData _firingData, Transform _transform)
     {

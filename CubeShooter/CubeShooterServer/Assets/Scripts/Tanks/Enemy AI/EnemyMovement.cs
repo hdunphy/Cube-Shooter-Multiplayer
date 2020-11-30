@@ -4,18 +4,19 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class EnemyMovement : LoadableGameObject
+public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] private List<EnemyAIStateType> EnemyStates;
     [SerializeField] private NearestBulletDetector bulletDetector;
-    public float StrafeDistance = 12f;
-    public float ChaseDistance = 15f;
+    public float StrafeDistance => MovementData.StrafeDistance;
+    public float ChaseDistance => MovementData.ChaseDistance;
     public Vector3? TargetDestination { get; set; }
     public Player TargetedPlayer { get; private set; }
     public BulletCollider NearestBullet { get; private set; }
 
     private NavMeshAgent navMeshAgent;
     private Enemy enemyController;
+    private EnemyMovementData MovementData;
 
     private EnemyAIStateMachine stateMachine;
 
@@ -33,11 +34,12 @@ public class EnemyMovement : LoadableGameObject
         navMeshAgent = GetComponent<NavMeshAgent>();
 
         //navMeshAgent.updateRotation = false;
-        navMeshAgent.acceleration = 8; //enemyMovementData.NavMeshAcceleration;
-        navMeshAgent.angularSpeed = 120; // enemyMovementData.NavMeshAngularSpeed;
-        navMeshAgent.speed = 3; // enemyMovementData.NavMeshVelocity;
+        navMeshAgent.acceleration = MovementData.NavMeshAcceleration;// 8; //enemy
+        navMeshAgent.angularSpeed = MovementData.NavMeshAngularSpeed;//120; // enemy
+        navMeshAgent.speed = MovementData.NavMeshVelocity; //3; //
 
         enemyController = GetComponent<Enemy>();
+        MovementData = (EnemyMovementData)enemyController.GetFiringData();
 
         //Events
         enemyController.UpdateTargetedPlayer += EnemyController_UpdateTargetedPlayer;
@@ -55,6 +57,8 @@ public class EnemyMovement : LoadableGameObject
     {
         if (TargetDestination.HasValue)
             navMeshAgent.SetDestination(TargetDestination.Value);
+
+        ServerSend.TankPosition(enemyController.GetInstanceID(), transform.position, transform.rotation, false);
     }
 
     private void OnDestroy()
@@ -63,10 +67,10 @@ public class EnemyMovement : LoadableGameObject
         bulletDetector.AddDangerousBullet -= BulletDetector_AddDangerousBullet;
     }
 
-    public override void OnLoad()
-    {
-        NetworkManager.Instance.SetBuildNavMesh(true);
-    }
+    //public override void OnLoad()
+    //{
+    //    NetworkManager.Instance.SetBuildNavMesh(true);
+    //}
 
     private void EnemyController_UpdateTargetedPlayer(Player _player) { TargetedPlayer = _player; }
 

@@ -118,7 +118,7 @@ public class Player : MonoBehaviour
         }
 
         //Send to clients
-        ServerSend.TankPosition(id, transform.position, true);
+        ServerSend.TankPosition(id, transform.position, transform.rotation, true);
     }
 
     public void SetInput(bool[] _inputs, Vector3 _mousePosition)
