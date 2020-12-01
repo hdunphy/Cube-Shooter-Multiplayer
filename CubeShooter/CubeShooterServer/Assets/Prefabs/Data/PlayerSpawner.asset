@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca0c8e83efe24c540b526bed6acff564, type: 3}
   m_Name: PlayerSpawner
   m_EditorClassIdentifier: 
-  color: {r: 0, g: 0, b: 1, a: 0.5019608}
+  color: {r: 0, g: 0, b: 1, a: 1}

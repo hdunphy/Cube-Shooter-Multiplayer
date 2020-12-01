@@ -40,7 +40,6 @@ public class NetworkManager : MonoBehaviour
         });
     }
 
-
     private void OnApplicationQuit()
     {
         //TODO: Send Stop to client
@@ -69,6 +68,11 @@ public class NetworkManager : MonoBehaviour
     public bool AllPlayersReady()
     {
         return Server.GetAllActiveClients().Any(x => !x.isReady); //WHere is connected and is not ready
+    }
+
+    public void LoadLevel()
+    {
+        levelSetUp.LoadLevel();
     }
 
     public IGameState GetState()

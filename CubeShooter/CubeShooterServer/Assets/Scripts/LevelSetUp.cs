@@ -14,21 +14,6 @@ public class LevelSetUp : MonoBehaviour
 
     private bool setBuildNavMesh;
 
-    //public List<Vector3> GetWallPositions()
-    //{
-    //    List<Vector3> wallPositions = new List<Vector3>();
-    //    int wallCount = transform.childCount;
-
-    //    for (int i = 0; i < wallCount; i++)
-    //    {
-    //        Transform child = transform.GetChild(i);
-    //        if (child.CompareTag("Wall"))
-    //            wallPositions.Add(child.position);
-    //    }
-
-    //    return wallPositions;
-    //}
-
     private void Start()
     {
         setBuildNavMesh = false;
@@ -79,10 +64,23 @@ public class LevelSetUp : MonoBehaviour
         if (prefabRef == null)
             return; //Not in the list
         prefabRef.OnLoad(new Vector3(x, 0.5f, y), transform);
+    }
 
-        //LoadableGameObject go = Instantiate(prefabRef, new Vector3(x, 0.5f, y), Quaternion.identity, transform);
-        //Debug.Log($"{color} returns this prefab: {go.name}");
+    public void LoadLevel()
+    {
+        //Reset Components
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
+            Destroy(child.gameObject);
+        }
 
-        //go.OnLoad();
+        //Reload Everything
+        LoadLevelFromPNG();
+
+        //Respawn all players
+
+        foreach (Player _player in FindObjectsOfType<Player>())
+            _player.Respawn();
     }
 }

@@ -9,12 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d24519dd41d15934993a30120acd387a, type: 3}
-  m_Name: Enemy Stationary 1 Bullet
+  m_Script: {fileID: 11500000, guid: 30ffe2871939c2342aeea1107742685b, type: 3}
+  m_Name: Enemy Stationary 1 Bounce Rocket
   m_EditorClassIdentifier: 
   fireRate: 1
-  bulletVelocity: 7
-  numberOfBulletBounces: 1
+  bulletVelocity: 21
+  numberOfBulletBounces: 2
   numberOfBullets: 1
   turnSmoothTime: 0.3
-  baseColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  baseColor: {r: 0, g: 0.5019608, b: 0.047058824, a: 1}
+  EnemyPrefab: {fileID: 3607440363293251764, guid: f5addb569d50aae49b0a1d154d925a9e, type: 3}

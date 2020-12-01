@@ -31,15 +31,15 @@ public class EnemyMovement : MonoBehaviour
         stateMachine = new EnemyAIStateMachine(stateMachineDictionary);
         TargetDestination = null;
 
+        enemyController = GetComponent<Enemy>();
+        MovementData = (EnemyMovementData)enemyController.GetFiringData();
+
         navMeshAgent = GetComponent<NavMeshAgent>();
 
         //navMeshAgent.updateRotation = false;
         navMeshAgent.acceleration = MovementData.NavMeshAcceleration;// 8; //enemy
         navMeshAgent.angularSpeed = MovementData.NavMeshAngularSpeed;//120; // enemy
         navMeshAgent.speed = MovementData.NavMeshVelocity; //3; //
-
-        enemyController = GetComponent<Enemy>();
-        MovementData = (EnemyMovementData)enemyController.GetFiringData();
 
         //Events
         enemyController.UpdateTargetedPlayer += EnemyController_UpdateTargetedPlayer;

@@ -14,18 +14,9 @@ public class PlayerManager : MonoBehaviour
     public GameObject tankModel;
     public TextMeshProUGUI usernameText;
 
-    public void Respawn(float seconds)
+    public void SetTankActive(bool _isActive)
     {
-        StartCoroutine(RespawnCoroutine(seconds));
-    }
-
-    private IEnumerator RespawnCoroutine(float seconds)
-    {
-        tankModel.SetActive(false);
-
-        yield return new WaitForSeconds(seconds);
-
-        tankModel.SetActive(true);
+        tankModel.SetActive(_isActive);
     }
 
     public void SpawnPlayer(int _id, string _username)

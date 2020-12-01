@@ -17,4 +17,4 @@ MonoBehaviour:
   numberOfBulletBounces: 1
   numberOfBullets: 5
   turnSmoothTime: 0.3
-  baseColor: {r: 0, g: 0, b: 1, a: 1}
+  baseColor: {r: 0, g: 0, b: 1, a: 0.5019608}

@@ -15,8 +15,9 @@ public class Player : MonoBehaviour
     private bool isDead;
 
     [SerializeField] private float MovementForce = 500;
-    [SerializeField] private float RespawnTime = 3;
+    //[SerializeField] private float RespawnTime = 3;
     [SerializeField] private float MaximumVelocity = 3.5f;
+
     private float forceModifier;
     private bool[] inputs;
     private Vector3 MousePosition;
@@ -40,24 +41,36 @@ public class Player : MonoBehaviour
         return FiringController.NumberOfBullets;
     }
 
-    public void Respawn()
+    public void OnBulletHit()
+    {
+        NetworkManager.Instance.GetState().PlayerDeath(this);
+    }
+
+    public void SetTankActive(bool _isActive)
+    {
+        isDead = !_isActive; //if tank is inactive, player isDead = true; If tank is active player isDead = false;
+        ServerSend.SetTankActive(id, _isActive);
+    }
+
+    public void Respawn(float RespawnTime = 1)
     {
         StartCoroutine(RespawnCoroutine(RespawnTime));
     }
 
     private IEnumerator RespawnCoroutine(float seconds)
     {
-        ServerSend.PlayerRespawn(id, seconds);
         isDead = true;
         GameObject tankObject = transform.GetChild(0).gameObject;
         tankObject.SetActive(false);
+        ServerSend.SetTankActive(id, false);
 
         yield return new WaitForSeconds(seconds);
 
         transform.position = RespawnLocation.Instance.GetRespawnLocation();
         tankObject.SetActive(true);
+        ServerSend.SetTankActive(id, true);
 
-        while(transform.position.y > 0.1)
+        while (transform.position.y > 0.1)
         {
             Move(Vector2.zero);
             yield return null;

@@ -304,7 +304,7 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.spawnPlayer, ClientHandle.SpawnPlayer },
             { (int)ServerPackets.spawnWalls, ClientHandle.SpawnWalls },
             { (int)ServerPackets.tankPosition, ClientHandle.TankPosition },
-            { (int)ServerPackets.playerRespawn, ClientHandle.PlayerRespawn },
+            { (int)ServerPackets.setTankActive, ClientHandle.SetTankActive },
             { (int)ServerPackets.headRotation, ClientHandle.HeadRotation },
             { (int)ServerPackets.playerDisconnect, ClientHandle.PlayerDisconnected },
             { (int)ServerPackets.bulletPosition, ClientHandle.BulletPosition },

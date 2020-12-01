@@ -47,6 +47,7 @@ MonoBehaviour:
   Id: 0
   headTransform: {fileID: 3343581226169392438}
   Renderer: {fileID: 3866936842413167294}
+  tankModel: {fileID: 1452626820742951557}
 --- !u!1001 &4186329813554967977
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -104,6 +105,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6080eb4dea6335340b73d38ab537ce76, type: 3}
+--- !u!1 &1452626820742951557 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3328178458231867180, guid: 6080eb4dea6335340b73d38ab537ce76, type: 3}
+  m_PrefabInstance: {fileID: 4186329813554967977}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9178688776828186932 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5006195217630971037, guid: 6080eb4dea6335340b73d38ab537ce76, type: 3}

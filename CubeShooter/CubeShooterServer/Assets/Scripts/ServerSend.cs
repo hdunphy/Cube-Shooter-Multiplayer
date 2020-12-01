@@ -166,12 +166,13 @@ class ServerSend
 
     }
 
-    public static void PlayerRespawn(int _id, float _seconds)
+    public static void SetTankActive(int _id, bool _isActive, bool _isPlayer = true)
     {
-        using (Packet _packet = new Packet((int)ServerPackets.playerRespawn))
+        using (Packet _packet = new Packet((int)ServerPackets.setTankActive))
         {
             _packet.Write(_id);
-            _packet.Write(_seconds);
+            _packet.Write(_isActive);
+            _packet.Write(_isPlayer);
 
             SendTCPDataToAll(_packet);
         }

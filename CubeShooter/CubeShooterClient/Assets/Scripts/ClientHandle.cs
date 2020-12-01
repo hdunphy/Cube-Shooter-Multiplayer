@@ -95,12 +95,26 @@ public class ClientHandle : MonoBehaviour
         }
     }
 
-    public static void PlayerRespawn(Packet _packet)
+    public static void SetTankActive(Packet _packet)
     {
         int _id = _packet.ReadInt();
-        float _seconds = _packet.ReadFloat();
+        bool _isActive = _packet.ReadBool();
+        bool _isPlayer = _packet.ReadBool();
 
-        GameManager.players[_id].Respawn(_seconds);
+        if (_isPlayer)
+        {
+            if (GameManager.players.TryGetValue(_id, out PlayerManager playerManager))
+                playerManager.SetTankActive(_isActive);
+            else
+                DictionaryMissingKeyError("Player", _id);
+        }
+        else
+        {
+            if (GameManager.enemies.TryGetValue(_id, out EnemyManager enemyManager))
+                enemyManager.SetTankActive(_isActive);
+            else
+                DictionaryMissingKeyError("Enemy", _id);
+        }
     }
 
     public static void HeadRotation(Packet _packet)

@@ -78,6 +78,7 @@ class Client
             }
         }
 
+        //TODO: Is this the best method?  
         player.Respawn();
     }
 

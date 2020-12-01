@@ -17,7 +17,8 @@ MonoBehaviour:
   numberOfBulletBounces: 1
   numberOfBullets: 3
   turnSmoothTime: 0.3
-  baseColor: {r: 0.6981132, g: 0, b: 0, a: 1}
+  baseColor: {r: 1, g: 0, b: 0, a: 1}
+  EnemyPrefab: {fileID: 6383262465258000153, guid: 013164dd4a22bf94ca84874e43ac5a46, type: 3}
   navMeshAngularSpeed: 120
   navMeshAcceleration: 8
   navMeshVelocity: 3

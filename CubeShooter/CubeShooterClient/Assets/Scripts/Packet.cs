@@ -13,7 +13,7 @@ public enum ServerPackets
     spawnPlayer,
     spawnWalls,
     tankPosition,
-    playerRespawn,
+    setTankActive,
     headRotation,
     playerDisconnect,
     bulletPosition,
