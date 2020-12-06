@@ -5,6 +5,11 @@
         //Should not need anything
     }
 
+    public void EnemyDeath(Enemy enemy)
+    {
+        //Won't enter
+    }
+
     public void PlayerDeath(Player player)
     {
         //Shouldn't get to here

@@ -41,12 +41,6 @@ public class Player : MonoBehaviour
         return FiringController.NumberOfBullets;
     }
 
-    public void OnBulletHit()
-    {
-        isDead = true;
-        NetworkManager.Instance.GetState().PlayerDeath(this);
-    }
-
     public void SetTankActive(bool _isActive)
     {
         isDead = !_isActive; //if tank is inactive, player isDead = true; If tank is active player isDead = false;

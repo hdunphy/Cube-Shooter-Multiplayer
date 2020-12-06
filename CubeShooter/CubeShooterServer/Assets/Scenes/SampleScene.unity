@@ -431,7 +431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: LevelBitmaps/Level
-  levelBitmap: {fileID: 2800000, guid: ac687a9772ea156428db5848be7375ae, type: 3}
+  levelBitmap: {fileID: 2800000, guid: 85195fc820b06c54bb06433fbb108b1e, type: 3}
   loadableGameObjects:
   - {fileID: 11400000, guid: 37987c804df8ef841875587db98ee63e, type: 2}
   - {fileID: 11400000, guid: c162823490b7b084caadd5e235dcaa44, type: 2}
@@ -442,6 +442,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f590ac9d2d8ad0d4dbb915b3c977787b, type: 2}
   - {fileID: 11400000, guid: 2a5011491a211114fb56b018704b8455, type: 2}
   - {fileID: 11400000, guid: c4be2367ee673164b8d115301a06294c, type: 2}
+  classicModeLevels:
+  - {fileID: 2800000, guid: b1b63b184a8352348a64e734eef5dfd2, type: 3}
+  - {fileID: 2800000, guid: ac687a9772ea156428db5848be7375ae, type: 3}
   navMeshSurface: {fileID: 2445356430571141338}
 --- !u!4 &1296762446
 Transform:

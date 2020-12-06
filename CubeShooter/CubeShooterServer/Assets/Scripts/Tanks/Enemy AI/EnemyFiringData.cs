@@ -8,9 +8,8 @@ public class EnemyFiringData : TankFiringData
     [SerializeField] private Enemy EnemyPrefab;
 
     public override void OnLoad(Vector3 _position, Transform _parent)
-    {
+        {
         EnemyPrefab.SetFiringData(this);
         Enemy enemy = Instantiate(EnemyPrefab, _position, Quaternion.identity, _parent);
-
     }
 }

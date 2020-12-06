@@ -51,11 +51,11 @@ public class BulletCollider : MonoBehaviour
                 }
                 break;
             case "Player":
-                collision.collider.GetComponent<Player>().OnBulletHit();
+                NetworkManager.Instance.GetState().PlayerDeath(collision.collider.GetComponent<Player>());
                 bulletObejctPool.DestroyToPool(gameObject);
                 break;
             case "Tank":
-                collision.collider.GetComponent<Enemy>().Destroy();
+                NetworkManager.Instance.GetState().EnemyDeath(collision.collider.GetComponent<Enemy>());
                 bulletObejctPool.DestroyToPool(gameObject);
                 break;
             case "Bullet":

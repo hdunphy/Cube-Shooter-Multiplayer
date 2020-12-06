@@ -73,12 +73,17 @@ public class NetworkManager : MonoBehaviour
 
     public void LoadLevel()
     {
-        levelSetUp.LoadLevel();
+        levelSetUp.LoadLevelFromPNG();
         foreach (Client _client in Server.GetAllActiveClients())
             _client.SendIntoGame();
     }
 
-    public void ResetLevel()
+    public bool SetLevelIndex(int levelIndex)
+    {
+        return levelSetUp.SetLevelIndex(levelIndex);
+    }
+
+    public void ResetLevel(bool isSuccess)
     {
         foreach (Client _client in Server.GetAllActiveClients())
         {
@@ -89,6 +94,9 @@ public class NetworkManager : MonoBehaviour
         levelSetUp.ResetLevel();
 
         BulletObjectPool.Instance.DestroyAllBullets();
+
+        //SendServer to return to lobby
+        ServerSend.EndLevel(isSuccess);
     }
 
     public IGameState GetState()

@@ -20,6 +20,11 @@ public class ArenaBattleState : IGameState
         player.Respawn(RespawnTime);
     }
 
+    public void EnemyDeath(Enemy enemy)
+    {
+        enemy.Destroy();
+    }
+
     public StateType UpdateState()
     {
         //Reset level ?

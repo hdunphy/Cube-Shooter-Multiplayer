@@ -42,6 +42,11 @@ public class RespawnLocation : MonoBehaviour
         Locations.Add(location);
     }
 
+    public void ResetRespawnLocations()
+    {
+        Locations.Clear();
+    }
+
     //public void LoadRespawnLocations(Transform levelSetUp)
     //{
     //    int childCount = levelSetUp.childCount;

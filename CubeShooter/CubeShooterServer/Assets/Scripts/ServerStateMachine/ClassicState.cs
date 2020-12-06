@@ -2,6 +2,14 @@
 
 public class ClassicState : IGameState
 {
+    private int currentLevelIndex;
+
+    public ClassicState()
+    {
+        currentLevelIndex = 0;
+        NetworkManager.Instance.SetLevelIndex(currentLevelIndex);
+    }
+
     public void Disconnect(Player player)
     {
         BulletObjectPool.Instance.RemoveBulletsFromPlayer(player);
@@ -13,20 +21,26 @@ public class ClassicState : IGameState
             NetworkManager.Instance.NextState();
     }
 
+    public void EnemyDeath(Enemy enemy)
+    {
+        enemy.Destroy();
+
+        if(NetworkManager.Instance.GetEnemies().Length == 1)
+        {
+            NetworkManager.Instance.ResetLevel(true);
+            bool hasLevelLeft = NetworkManager.Instance.SetLevelIndex(++currentLevelIndex);
+                
+        }
+    }
+
     public void PlayerDeath(Player player)
     {
         player.SetTankActive(false);
 
         if (Server.GetAllActiveClients().Count(s => !s.player.GetIsDead()) == 0)
         { //Check if all players are dead. (number of players not dead == 0)
-            /*NetworkManager.Instance.LoadLevel(); */
-
             //Need to reset the level
-            NetworkManager.Instance.ResetLevel();
-
-            //SendServer to return to lobby
-            ServerSend.EndLevel(false);
-            //NetworkManager.Instance.NextState();
+            NetworkManager.Instance.ResetLevel(false);
         }
     }
 
