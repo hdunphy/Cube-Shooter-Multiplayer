@@ -29,6 +29,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_InputField UserNameInput;
     [SerializeField] private TMP_Text UserColor;
 
+    [Header("In Game UI")]
+    [SerializeField] private GameObject AfterLevelPopup;
+
+    [Header("In Game Interactables")]
+    [SerializeField] private Button ContinueButton;
+    [SerializeField] private TMP_Text SuccessText;
+
     [Header("Defaults")]
     [SerializeField] private Color UnselectedColor;
     [SerializeField] private Color SelectedColor;
@@ -38,10 +45,6 @@ public class UIManager : MonoBehaviour
     private ColorBlock SelectedColorBlock;
     private const string MyIpAddress = "127.0.0.1";
     private Dictionary<int, PlayerListObject> playerObjectsDict;
-
-    //private InputField userNameField;
-    //private InputField ipAddressInput;
-    //private Button joinButton;
 
     private void Awake()
     {
@@ -117,6 +120,7 @@ public class UIManager : MonoBehaviour
         connectPopup.SetActive(false);
         startMenu.SetActive(false);
         lobbyMenu.SetActive(true);
+        AfterLevelPopup.SetActive(false);
     }
 
     public void StartGame()
@@ -126,6 +130,7 @@ public class UIManager : MonoBehaviour
         lobbyMenu.SetActive(false);
         stage.SetActive(true);
         uiCamera.SetActive(false);
+        AfterLevelPopup.SetActive(false);
     }
     #endregion
 
@@ -202,6 +207,7 @@ public class UIManager : MonoBehaviour
         int id = Client.Instance.myId;
         string userNameText = string.IsNullOrEmpty(UserNameInput.text) ? "player" + id : UserNameInput.text;
 
+        Debug.Log($"Update player info. {id}: {userNameText} color - {UserColor.text}. Is Ready ({isReady})");
         UpdatePlayerObject(id, userNameText, _color, isReady);
         ClientSend.UpdatePlayerInfo(userNameText, _color, isReady);
     }
@@ -214,55 +220,36 @@ public class UIManager : MonoBehaviour
     }
     #endregion
 
-    //OLD CODE
-    /*
-    public void ConfirmUserName()
+    #region In Game UI
+    public void ShowLevelCompletePopup(bool _isSuccess)
     {
-        userNameField.interactable = false;
-        startMenu.SetActive(false);
-        connectMenu.SetActive(true);
-    }
+        //TODO: add stats to screen
+        AfterLevelPopup.SetActive(true);
+        uiCamera.SetActive(true);
+        stage.SetActive(false);
 
-
-    public void StartGame()
-    {
-        //startMenu.SetActive(false);
-        //userNameField.interactable = false;
-        stage.SetActive(true);
-        uiCamera.SetActive(false);
-        //Client.Instance.ConnectToServer();
-
-        //Send into game
-    }
-
-    public void ConnectAsHost()
-    {
-        connectMenu.SetActive(false);
-        ipAddressInput.interactable = false;
-        startMenu.SetActive(true);
-        Client.Instance.ConnectToServer();
-    }
-
-    public void ConnectAsJoin()
-    {
-        connectMenu.SetActive(false);
-        ipAddressInput.interactable = false;
-        startMenu.SetActive(true);
-        Client.Instance.ConnectToServer(ipAddressInput.text);
-    }
-
-    private void EnableJoin()
-    {
-        joinButton.interactable = false;
-        if (!string.IsNullOrEmpty(ipAddressInput.text))
+        if(_isSuccess)
         {
-            //check if it is a valid IP Address
-            if (IPAddress.TryParse(ipAddressInput.text, out IPAddress address) &&
-                address.AddressFamily.Equals(AddressFamily.InterNetwork))
-            {
-                joinButton.interactable = true;
-            }
+            ContinueButton.gameObject.SetActive(true);
+            SuccessText.text = "Level CLEARED!";
+        }
+        else
+        {
+            ContinueButton.gameObject.SetActive(false);
+            SuccessText.text = "Level FAILED!";
         }
     }
-    */
+
+    public void PressReturnToLobbyButton()
+    {
+        Debug.Log("Return to lobby");
+        ClientSend.ContinueWithGame(false);
+    }
+
+    public void PressContinueButton()
+    {
+        Debug.Log("Continue Button");
+        ClientSend.ContinueWithGame(true);
+    }
+    #endregion
 }

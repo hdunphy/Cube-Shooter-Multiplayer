@@ -36,6 +36,7 @@ public class NetworkManager : MonoBehaviour
         StateMachine = new GameStateMachine(new Dictionary<StateType, IGameState>()
         {
             {StateType.Lobby, new LobbyState() },
+            {StateType.Classic, new ClassicState() },
             {StateType.ArenaBattle, new ArenaBattleState() }
         });
     }
@@ -67,12 +68,27 @@ public class NetworkManager : MonoBehaviour
 
     public bool AllPlayersReady()
     {
-        return Server.GetAllActiveClients().Any(x => !x.isReady); //WHere is connected and is not ready
+        return Server.GetAllActiveClients().Any(x => x.isReady); //WHere is connected and is not ready
     }
 
     public void LoadLevel()
     {
         levelSetUp.LoadLevel();
+        foreach (Client _client in Server.GetAllActiveClients())
+            _client.SendIntoGame();
+    }
+
+    public void ResetLevel()
+    {
+        foreach (Client _client in Server.GetAllActiveClients())
+        {
+            //BulletObjectPool.Instance.RemoveBulletsFromPlayer(_client.player);
+            Destroy(_client.player.gameObject);
+        }
+
+        levelSetUp.ResetLevel();
+
+        BulletObjectPool.Instance.DestroyAllBullets();
     }
 
     public IGameState GetState()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -44,13 +45,36 @@ class ServerHandle
         Color userColor = _packet.ReadColor();
         bool isReady = _packet.ReadBool();
 
+        Server.clients[_fromClient].UpdateInfo(username, userColor, isReady);
+
         if (NetworkManager.Instance.AllPlayersReady())
         {
+            //Need to allow user to change this
             NetworkManager.Instance.NextState();
+        }
+    }
+
+    public static void ContinueWithGame(int _fromClient, Packet _packet)
+    {
+        var clients = Server.GetAllActiveClients();
+        if (clients.Count() < 1) //probably not necessary
+            Debug.LogWarning("No active clients left");
+
+        if(_fromClient == clients.First().id)
+        {
+            bool _toContinue = _packet.ReadBool();
+            if (_toContinue)
+            {
+                NetworkManager.Instance.LoadLevel();
+            }
+            else
+            {
+                NetworkManager.Instance.NextState();
+            }
         }
         else
         {
-            Server.clients[_fromClient].UpdateInfo(username, userColor, isReady);
+            Debug.Log("Continue with Game Requested by a non Host");
         }
     }
 }

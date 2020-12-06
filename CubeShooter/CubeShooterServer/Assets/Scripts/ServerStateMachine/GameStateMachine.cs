@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public enum StateType { Lobby, ArenaBattle }
+public enum StateType { Lobby, ArenaBattle,
+    Classic
+}
 public class GameStateMachine
 {
     private Dictionary<StateType, IGameState> _availableStates;

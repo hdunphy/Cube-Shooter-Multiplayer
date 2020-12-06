@@ -74,4 +74,28 @@ public class GameManager : MonoBehaviour
             bullets[_id].MoveBullet(_position, _rotation);
         }
     }
+
+    public void EndLevel(bool isSuccessful)
+    {
+        UIManager.Instance.ShowLevelCompletePopup(isSuccessful);
+
+        //Destroy all walls
+        for (int i = 0; i < wallParent.childCount; i++)
+            Destroy(wallParent.GetChild(i).gameObject);
+
+        //Destroy all bullets
+        foreach (BulletManager _bullet in FindObjectsOfType<BulletManager>())
+            Destroy(_bullet.gameObject);
+
+        //Destroy all enemies
+        foreach (EnemyManager _enemy in FindObjectsOfType<EnemyManager>())
+            Destroy(_enemy.gameObject);
+
+        //Destroy all players
+        foreach (PlayerManager _player in FindObjectsOfType<PlayerManager>())
+        {
+            players.Remove(_player.id);
+            Destroy(_player.gameObject);
+        }
+    }
 }

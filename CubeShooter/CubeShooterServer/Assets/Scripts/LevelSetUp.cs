@@ -19,7 +19,7 @@ public class LevelSetUp : MonoBehaviour
         setBuildNavMesh = false;
         if (levelBitmap == null)
             levelBitmap = Resources.Load(Path) as Texture2D;
-        LoadLevelFromPNG();
+        //LoadLevelFromPNG();
     }
 
     public void SetBuildNaveMesh(bool _setBuildNavMesh)
@@ -69,18 +69,24 @@ public class LevelSetUp : MonoBehaviour
     public void LoadLevel()
     {
         //Reset Components
-        for(int i = 0; i < transform.childCount; i++)
-        {
-            Transform child = transform.GetChild(i);
-            Destroy(child.gameObject);
-        }
+        //ResetLevel();
+        //Tell Client to reset
 
         //Reload Everything
         LoadLevelFromPNG();
 
         //Respawn all players
 
-        foreach (Player _player in FindObjectsOfType<Player>())
-            _player.Respawn();
+        //foreach (Player _player in FindObjectsOfType<Player>())
+        //    _player.Respawn();
+    }
+
+    public void ResetLevel()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
+            Destroy(child.gameObject);
+        }
     }
 }

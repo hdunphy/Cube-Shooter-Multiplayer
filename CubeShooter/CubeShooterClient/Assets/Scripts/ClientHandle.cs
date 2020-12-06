@@ -205,6 +205,13 @@ public class ClientHandle : MonoBehaviour
         }
     }
 
+    public static void EndLevel(Packet _packet)
+    {
+        bool isSuccessful = _packet.ReadBool();
+
+        GameManager.Instance.EndLevel(isSuccessful);
+    }
+
     private static void DictionaryMissingKeyError(string type, int id)
     {
         Debug.LogWarning($"{type} {id} not found in dictionary");

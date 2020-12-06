@@ -310,7 +310,8 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.bulletPosition, ClientHandle.BulletPosition },
             { (int)ServerPackets.despawnBullet, ClientHandle.DespawnBullet },
             { (int)ServerPackets.spawnEnemy, ClientHandle.SpawnEnemy },
-            { (int)ServerPackets.despawnEnemy, ClientHandle.DespawnEnemy }
+            { (int)ServerPackets.despawnEnemy, ClientHandle.DespawnEnemy },
+            { (int)ServerPackets.endLevel, ClientHandle.EndLevel }
         };
         Debug.Log("Initialized packets.");
     }

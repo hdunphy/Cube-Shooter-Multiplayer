@@ -93,6 +93,16 @@ class ServerSend
         }
     }
 
+    public static void EndLevel(bool isSuccess)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.endLevel))
+        {
+            _packet.Write(isSuccess);
+
+            SendTCPDataToAll(_packet);
+        }
+    }
+
     public static void UpdatePlayerInfo(Client _client)
     {
         using (Packet _packet = new Packet((int)ServerPackets.updatePlayerInfo))

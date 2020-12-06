@@ -18,16 +18,23 @@ public class ClassicState : IGameState
         player.SetTankActive(false);
 
         if (Server.GetAllActiveClients().Count(s => !s.player.GetIsDead()) == 0)
-        { //Check if all players are dead
-            NetworkManager.Instance.LoadLevel();
+        { //Check if all players are dead. (number of players not dead == 0)
+            /*NetworkManager.Instance.LoadLevel(); */
+
+            //Need to reset the level
+            NetworkManager.Instance.ResetLevel();
+
+            //SendServer to return to lobby
+            ServerSend.EndLevel(false);
+            //NetworkManager.Instance.NextState();
         }
-        //if all players dead
-            //LevelSetup.LoadLevel(current level)
-                //set all players active
     }
 
     public StateType UpdateState()
     {
+        foreach (Client _client in Server.GetAllActiveClients())
+            _client.isReady = false;
+        ServerSend.ConnectToLobby();
         return StateType.Lobby;
     }
 }

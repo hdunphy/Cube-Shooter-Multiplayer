@@ -17,7 +17,7 @@ public class PlayerObject
         IsReady = _isReady;
     }
 
-    public void SetUserName(string _userName) => UserName = _userName;
-    public void SetColor(Color _color) => Color = _color;
-    public void SetIsReadyIcon(bool _isReady) => IsReady = _isReady;
+    //public void SetUserName(string _userName) => UserName = _userName;
+    //public void SetColor(Color _color) => Color = _color;
+    //public void SetIsReadyIcon(bool _isReady) => IsReady = _isReady;
 }

@@ -44,7 +44,7 @@ public class BulletObjectPool : MonoBehaviour
         bool earlyBreak = false;
         int i;
 
-        for(i = 0; i < player.GetNumberOfBullets(); i++)
+        for (i = 0; i < player.GetNumberOfBullets(); i++)
         {
             if (bulletQueue.Count == 0)
             {
@@ -64,9 +64,13 @@ public class BulletObjectPool : MonoBehaviour
     public GameObject SpawnFromPool(Vector3 position, Quaternion rotation, Vector3 velocity, float maxVelocity, TankFiringController controller, int numberOfBounces)
     {
         GameObject bullet = bulletQueue.Dequeue();
-        bullet.SetActive(true);
+        if (bullet != null)
+        {
+            bullet.SetActive(true);
 
-        bullet.GetComponent<BulletCollider>().OnBulletSpawn(position, rotation, velocity, maxVelocity, controller, numberOfBounces);
+            bullet.GetComponent<BulletCollider>().OnBulletSpawn(position, rotation, velocity, maxVelocity, controller, numberOfBounces);
+        }
+
         return bullet;
     }
 
@@ -78,5 +82,17 @@ public class BulletObjectPool : MonoBehaviour
             Destroy(bullet);
         else
             bulletQueue.Enqueue(bullet);
+    }
+
+    public void DestroyAllBullets()
+    {
+        for (int i = 0; i < bulletQueue.Count; i++)
+            Destroy(bulletQueue.Dequeue());
+
+        foreach (BulletCollider _bullet in FindObjectsOfType<BulletCollider>())
+        {
+            if (!bulletQueue.Contains(_bullet.gameObject))
+                Destroy(_bullet.gameObject);
+        }
     }
 }

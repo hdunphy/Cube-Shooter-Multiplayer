@@ -13,8 +13,7 @@
 
     public StateType UpdateState()
     {
-        foreach (Client _client in Server.GetAllActiveClients())
-            _client.SendIntoGame();
-        return StateType.ArenaBattle;
+        NetworkManager.Instance.LoadLevel();
+        return StateType.Classic;
     }
 }

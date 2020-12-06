@@ -18,7 +18,8 @@ public enum ServerPackets
     bulletPosition,
     despawnBullet,
     spawnEnemy,
-    despawnEnemy
+    despawnEnemy,
+    endLevel
 }
 
 /// <summary>Sent from client to server.</summary>
@@ -27,7 +28,8 @@ public enum ClientPackets
     welcomeReceived = 1,
     playerMovment,
     playerShoot,
-    updatePlayerInfo
+    updatePlayerInfo,
+    continueWithGame
 }
 
 public class Packet : IDisposable

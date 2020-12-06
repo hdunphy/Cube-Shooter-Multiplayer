@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
 
     public void OnBulletHit()
     {
+        isDead = true;
         NetworkManager.Instance.GetState().PlayerDeath(this);
     }
 

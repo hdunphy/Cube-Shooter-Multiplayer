@@ -17,17 +17,6 @@ public class BulletManager : MonoBehaviour
         effect.Play();
     }
 
-    //public void Spawn(Vector3 position, Quaternion rotation)
-    //{
-    //    gameObject.SetActive(true);
-    //    transform.position = position;
-    //    transform.rotation = rotation;
-    //    //Add Visual Effects
-
-    //    effect = Instantiate(smoke, transform);
-    //    effect.Play();
-    //}
-
     public void Despawn()
     {
         effect.Stop();

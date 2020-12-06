@@ -64,5 +64,15 @@ public class ClientSend : MonoBehaviour
             SendTCPData(_packet);
         }
     }
+
+    public static void ContinueWithGame(bool canContinue)
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.continueWithGame))
+        {
+            _packet.Write(canContinue);
+
+            SendTCPData(_packet);
+        }
+    }
     #endregion
 }
