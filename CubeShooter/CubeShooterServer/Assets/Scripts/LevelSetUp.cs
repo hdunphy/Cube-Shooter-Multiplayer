@@ -21,7 +21,6 @@ public class LevelSetUp : MonoBehaviour
 
         if (levelBitmap == null)
             levelBitmap = Resources.Load(Path) as Texture2D;
-        //LoadLevelFromPNG();
     }
 
     public void SetBuildNaveMesh(bool _setBuildNavMesh)

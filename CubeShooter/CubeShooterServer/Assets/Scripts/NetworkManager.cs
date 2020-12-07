@@ -49,7 +49,7 @@ public class NetworkManager : MonoBehaviour
 
     public List<Vector3> GetWallPositions()
     {
-        return FindObjectsOfType<Wall>().Select(x => x.transform.position).ToList();
+        return FindObjectsOfType<Wall>().Select(x => x.WallPosition).ToList();
     }
 
     public Enemy[] GetEnemies()
