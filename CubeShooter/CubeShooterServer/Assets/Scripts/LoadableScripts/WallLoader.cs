@@ -6,9 +6,10 @@ using UnityEngine;
 public class WallLoader : LoadableGameObject
 {
     public GameObject wallPrefab;
+    [SerializeField] private Color color;
     public override Color GetBaseColor()
     {
-        return Color.black;
+        return color;
     }
 
     public override void OnLoad(Vector3 _position, Transform parent)

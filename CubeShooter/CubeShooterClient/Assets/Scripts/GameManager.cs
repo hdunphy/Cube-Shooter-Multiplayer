@@ -84,12 +84,16 @@ public class GameManager : MonoBehaviour
             Destroy(wallParent.GetChild(i).gameObject);
 
         //Destroy all bullets
-        foreach (BulletManager _bullet in FindObjectsOfType<BulletManager>())
+        foreach (BulletManager _bullet in bullets.Values)
+        {
             Destroy(_bullet.gameObject);
+        }
+        bullets.Clear();
 
         //Destroy all enemies
-        foreach (EnemyManager _enemy in FindObjectsOfType<EnemyManager>())
+        foreach (EnemyManager _enemy in enemies.Values)
             Destroy(_enemy.gameObject);
+        enemies.Clear();
 
         //Destroy all players
         foreach (PlayerManager _player in FindObjectsOfType<PlayerManager>())

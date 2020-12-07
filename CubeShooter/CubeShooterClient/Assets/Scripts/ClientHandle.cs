@@ -167,9 +167,12 @@ public class ClientHandle : MonoBehaviour
     {
         int _id = _packet.ReadInt();
 
-        //Destroy(GameManager.bullets[_id].gameObject);
-        GameManager.bullets[_id].Despawn();
-        GameManager.bullets.Remove(_id);
+        if (GameManager.bullets.ContainsKey(_id))
+        {
+            GameManager.bullets[_id].Despawn();
+            GameManager.bullets.Remove(_id);
+        }
+
     }
 
     public static void SpawnEnemy(Packet _packet)
@@ -181,7 +184,7 @@ public class ClientHandle : MonoBehaviour
         int count = _packet.ReadInt();
         Debug.Log($"Found {count} enemies");
 
-        for(int i = 0; i < count; i++)
+        for (int i = 0; i < count; i++)
         {
             id = _packet.ReadInt();
             position = _packet.ReadVector3();
@@ -194,7 +197,7 @@ public class ClientHandle : MonoBehaviour
     {
         int _id = _packet.ReadInt();
 
-        if(GameManager.enemies.TryGetValue(_id, out EnemyManager enemyManager))
+        if (GameManager.enemies.TryGetValue(_id, out EnemyManager enemyManager))
         {
             Destroy(enemyManager.gameObject);
             GameManager.enemies.Remove(_id);
