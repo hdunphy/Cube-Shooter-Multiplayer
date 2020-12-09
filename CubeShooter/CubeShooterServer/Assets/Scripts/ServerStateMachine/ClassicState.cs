@@ -39,7 +39,7 @@ public class ClassicState : IGameState
 
         if (Server.GetAllActiveClients().Count(s => !s.player.GetIsDead()) == 0)
         { //Check if all players are dead. (number of players not dead == 0)
-            //Need to reset the level
+          //Need to reset the level
             NetworkManager.Instance.ResetLevel(false);
         }
     }
@@ -48,7 +48,11 @@ public class ClassicState : IGameState
     {
         foreach (Client _client in Server.GetAllActiveClients())
             _client.isReady = false;
+
+        currentLevelIndex = 0;
+        NetworkManager.Instance.SetLevelIndex(currentLevelIndex);
         ServerSend.ConnectToLobby();
+        
         return StateType.Lobby;
     }
 }
