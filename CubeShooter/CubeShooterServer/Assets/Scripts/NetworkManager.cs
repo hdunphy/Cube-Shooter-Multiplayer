@@ -87,7 +87,6 @@ public class NetworkManager : MonoBehaviour
     {
         foreach (Client _client in Server.GetAllActiveClients())
         {
-            //BulletObjectPool.Instance.RemoveBulletsFromPlayer(_client.player);
             Destroy(_client.player.gameObject);
         }
 
